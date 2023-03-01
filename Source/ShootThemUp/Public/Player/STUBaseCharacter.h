@@ -8,6 +8,7 @@
 
 
 class UCameraComponent;
+class USpringArmComponent;
 
 UCLASS()
 class SHOOTTHEMUP_API ASTUBaseCharacter : public ACharacter
@@ -19,12 +20,15 @@ public:
 	ASTUBaseCharacter();
 
 protected:
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+		USpringArmComponent* SpringArmComponent;
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+		UCameraComponent* CameraComponent;
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-    UCameraComponent* CameraComponent;
-
+    
 
 public:	
 	// Called every frame
@@ -36,6 +40,7 @@ public:
 private:
     void MoveForward(float Amount);
     void MoveRight(float Amount);
-
+    void LookUp(float Amount);
+    void TurnAround(float Amount);
 
 };

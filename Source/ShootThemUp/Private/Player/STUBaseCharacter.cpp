@@ -1,4 +1,4 @@
-// Shoot Them Up Game, All Rights Receved
+﻿// Shoot Them Up Game, All Rights Receved
 
 
 #include "Player/STUBaseCharacter.h"
@@ -57,6 +57,16 @@ bool ASTUBaseCharacter::IsRunning() const
     return WantsToRun && IsMovingForward && !GetVelocity().IsZero();
 }
 
+float ASTUBaseCharacter::GetMovementDirection() const
+{
+    if (GetVelocity().IsZero()) return 0.0f;
+    const auto VelocityNormal = GetVelocity().GetSafeNormal();//вирахували нормалі нашого вектору
+    const auto AngleBetween = FMath::Acos(FVector::DotProduct(GetActorForwardVector(), VelocityNormal));//скалярний добуток вектор нормалі та беремо з нього аркосінус
+    const auto CrossProduct = FVector::CrossProduct(GetActorForwardVector(), VelocityNormal);//Вектор між векторами -- після вираховуємо артогональний вектор
+    const auto Degrees = FMath::RadiansToDegrees(AngleBetween);
+    return CrossProduct.IsZero() ? Degrees : Degrees * FMath::Sign(CrossProduct.Z); // беремо наші градуси та перемножуємо на знак координати Z
+}
+
 void ASTUBaseCharacter::MoveForward(float Amount) 
 {
     IsMovingForward = Amount > 0.0f;
@@ -65,6 +75,8 @@ void ASTUBaseCharacter::MoveForward(float Amount)
 
 void ASTUBaseCharacter::MoveRight(float Amount) 
 {
+    if (Amount == 0.0f)
+        return; 
     AddMovementInput(GetActorRightVector(), Amount);
 }
 

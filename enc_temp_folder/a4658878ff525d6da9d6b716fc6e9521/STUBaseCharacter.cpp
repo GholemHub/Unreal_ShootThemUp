@@ -38,8 +38,15 @@ void ASTUBaseCharacter::BeginPlay()
 	
     check(TestHealth);
     check(TestRender);
+
+    OnTakeAnyDamage.AddDynamic(this, &ASTUBaseCharacter::OnTakeAnyDamageHandle);
 }
 
+void ASTUBaseCharacter::OnTakeAnyDamageHandle(
+    AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser)
+{
+    UE_LOG(BaseCharacterLog, Display, TEXT("Damage: %f"), Damage);
+}
 void ASTUBaseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);

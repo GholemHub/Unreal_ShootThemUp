@@ -9,6 +9,10 @@
 
 class UCameraComponent;
 class USpringArmComponent;
+class USTUHealthComponent;
+class UTestHealthComponent;
+//class UTestTextRenderComponent;
+class UTextRenderComponent;
 
 UCLASS()
 class SHOOTTHEMUP_API ASTUBaseCharacter : public ACharacter
@@ -20,13 +24,22 @@ public:
     ASTUBaseCharacter(const FObjectInitializer& ObjInit);
 
 protected:
-	
+    virtual void BeginPlay() override;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 		USpringArmComponent* SpringArmComponent;
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 		UCameraComponent* CameraComponent;
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+		UTestHealthComponent* TestHealth;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+        UTextRenderComponent* TestRender;
+	/* UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+		USTUHealthComponent* HealthComponent;
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+		UTextRenderComponent* HealthTextComponent;*/
 
 public:	
 	// Called every frame
@@ -49,4 +62,8 @@ private:
     void MoveRight(float Amount);
     void OnStartRunning();
     void OnStopRunning();
+
+	UFUNCTION()
+    void OnTakeAnyDamageHandle(
+        AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
 };

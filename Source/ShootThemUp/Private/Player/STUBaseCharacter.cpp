@@ -4,15 +4,17 @@
 #include "Player/STUBaseCharacter.h"
 #include "Camera/CameraComponent.h"
 #include "Components/InputComponent.h"
+#include "Components/STUHealthComponent.h"
 #include "Components/STUCharacterMovementComponent.h"
+#include "Components/TextRenderComponent.h"
+#include "Components/TestHealthComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
+DEFINE_LOG_CATEGORY_STATIC(BaseCharacterLog, All, All)
 
-// Sets default values
 ASTUBaseCharacter::ASTUBaseCharacter(const FObjectInitializer& ObjInit)
     : Super(ObjInit.SetDefaultSubobjectClass<USTUCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
     
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>("SpringAramComponent");
@@ -21,6 +23,14 @@ ASTUBaseCharacter::ASTUBaseCharacter(const FObjectInitializer& ObjInit)
 
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>("CameraComponent");
     CameraComponent->SetupAttachment(SpringArmComponent);
+
+    TestHealth = CreateDefaultSubobject<UTestHealthComponent>("TestHealth");
+    TestRender = CreateDefaultSubobject<UTextRenderComponent>("TestRender");
+    TestRender->SetupAttachment(GetRootComponent());
+
+    //HealthComponent = CreateDefaultSubobject<USTUHealthComponent>("HealthComponent");
+    //HealthTextComponent = CreateDefaultSubobject<UTextRenderComponent>("HealthTextComponent");
+    //HealthTextComponent->SetupAttachment(GetRootComponent());
 }
 
 // Called when the game starts or when spawned
@@ -28,12 +38,31 @@ void ASTUBaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+    //check(HealthComponent);
+    //check(HealthTextComponent);
+
+    //OnTakeAnyDamage.AddDynamic(this, &ASTUBaseCharacter::OnTakeAnyDamageHandle);
+}
+
+void ASTUBaseCharacter::OnTakeAnyDamageHandle(
+    AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
+{
+    //UE_LOG(BaseCharacterLog, Display, TEXT("Damage: %f"), Damage);
 }
 
 // Called every frame
 void ASTUBaseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+    auto Health = TestHealth->GetHealth();
+    //if (Health > 1.0f)
+    //    Health = 1111;
+    //else
+    //    Health = 2222;
+    TestRender->SetText(FText::FromString(FString::Printf(TEXT("%.0f"), Health)));
+
+    //TakeDamage(0.1f, FDamageEvent{}, Controller,this);
 }
 
 // Called to bind functionality to input
@@ -89,3 +118,5 @@ void ASTUBaseCharacter::OnStopRunning()
 {
     WantsToRun = false;
 }
+
+

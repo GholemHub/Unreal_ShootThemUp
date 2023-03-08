@@ -8,7 +8,7 @@
 #include "Components/STUCharacterMovementComponent.h"
 #include "Components/STUHealthComponent.h"
 #include "Components/TextRenderComponent.h"
-#include "Components/TestHealthComponent.h"
+//#include "Components/TestHealthComponent.h"
 
 #include "Logging/LogMacros.h"
 
@@ -26,7 +26,7 @@ ASTUBaseCharacter::ASTUBaseCharacter(const FObjectInitializer& ObjInit)
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>("CameraComponent");
     CameraComponent->SetupAttachment(SpringArmComponent);
 
-    TestHealth = CreateDefaultSubobject<UTestHealthComponent>("TestHealth");
+    STUHealth = CreateDefaultSubobject<USTUHealthComponent>("STUHealthComponent");
     TestRender = CreateDefaultSubobject<UTextRenderComponent>("TestRender");
     TestRender->SetupAttachment(GetRootComponent());
 }
@@ -36,7 +36,7 @@ void ASTUBaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
-    check(TestHealth);
+    check(STUHealth);
     check(TestRender);
 }
 
@@ -44,11 +44,11 @@ void ASTUBaseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-    auto Health = TestHealth->GetHealth();
+    auto Health = STUHealth->GetHealth();
 
     TestRender->SetText(FText::FromString(FString::Printf(TEXT("%.0f"), Health)));
 
-    TakeDamage(0.1f, FDamageEvent{}, Controller, this);
+    //TakeDamage(0.1f, FDamageEvent{}, Controller, this);
 }
 
 // Called to bind functionality to input

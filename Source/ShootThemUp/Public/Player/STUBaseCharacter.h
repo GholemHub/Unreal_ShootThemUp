@@ -11,7 +11,7 @@
 class UCameraComponent;
 class USpringArmComponent;
 class USTUHealthComponent;
-class UTestHealthComponent;
+//class UTestHealthComponent;
 class UTextRenderComponent;
 
 UCLASS()
@@ -32,7 +32,7 @@ protected:
 		UCameraComponent* CameraComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-		UTestHealthComponent* TestHealth;
+        USTUHealthComponent* STUHealth;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
         UTextRenderComponent* TestRender;

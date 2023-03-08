@@ -1,5 +1,7 @@
 #include "Components/STUHealthComponent.h"
 #include "GameFramework/Actor.h"
+#include "Develop/STUIceDamageType.h"
+#include "Develop/STUFireDamageType.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogHealthComponent, All, All)
 USTUHealthComponent::USTUHealthComponent()
@@ -24,4 +26,16 @@ void USTUHealthComponent::OnTakeAnyDamage(
 {
     Health -= Damage;
     UE_LOG(LogHealthComponent, Display, TEXT("Damage %f"), Damage)
+
+    if (DamageType)
+    {
+        if (DamageType->IsA<USTUFireDamageType>())
+        {
+            UE_LOG(LogHealthComponent, Display, TEXT("So hoooot !!!"));
+        }
+        else if (DamageType->IsA<USTUIceDamageType>())
+        {
+            UE_LOG(LogHealthComponent, Display, TEXT("So COOld !!!"));
+        }
+    }
 }

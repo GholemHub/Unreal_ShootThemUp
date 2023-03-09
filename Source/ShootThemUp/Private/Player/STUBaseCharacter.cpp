@@ -38,17 +38,17 @@ void ASTUBaseCharacter::BeginPlay()
 	
     check(STUHealth);
     check(TestRender);
+    check(GetCharacterMovement());
+
+    OnHealthChanged(STUHealth->GetHealth());
+    STUHealth->OnDeath.AddUObject(this, &ASTUBaseCharacter::OnDeath);
+    STUHealth->OnHealthChanged.AddUObject(this, &ASTUBaseCharacter::OnHealthChanged);
+
 }
 
 void ASTUBaseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-    auto Health = STUHealth->GetHealth();
-
-    TestRender->SetText(FText::FromString(FString::Printf(TEXT("%.0f"), Health)));
-
-    //TakeDamage(0.1f, FDamageEvent{}, Controller, this);
 }
 
 // Called to bind functionality to input
@@ -105,4 +105,18 @@ void ASTUBaseCharacter::OnStopRunning()
     WantsToRun = false;
 }
 
+void ASTUBaseCharacter::OnDeath() 
+{
+    UE_LOG(BaseCharacterLog, Warning, TEXT("Player %s is Dead"), *GetName())
+
+    PlayAnimMontage(DeathAnimMintage);
+    GetCharacterMovement()->DisableMovement();
+    SetLifeSpan(5.0f);
+    UE_LOG(BaseCharacterLog, Warning, TEXT("Player %s is Dead"), *GetName())
+}
+
+void ASTUBaseCharacter::OnHealthChanged(float Health) 
+{
+    TestRender->SetText(FText::FromString(FString::Printf(TEXT("%.0f"), Health)));
+}
 

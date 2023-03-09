@@ -36,10 +36,8 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
         UTextRenderComponent* TestRender;
-	/* UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-		USTUHealthComponent* HealthComponent;
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-		UTextRenderComponent* HealthTextComponent;*/
+    UPROPERTY(EditDefaultsOnly, Category = "Animation")
+    UAnimMontage* DeathAnimMintage;
 
 public:	
 	// Called every frame
@@ -54,6 +52,7 @@ public:
 		float GetMovementDirection() const;
 
 
+
 private:
     bool WantsToRun = false;
     bool IsMovingForward = false;
@@ -62,4 +61,6 @@ private:
     void MoveRight(float Amount);
     void OnStartRunning();
     void OnStopRunning();
+    void OnDeath();
+    void OnHealthChanged(float Health);
 };

@@ -10,6 +10,8 @@
 #include "Components/TextRenderComponent.h"
 #include "GameFramework/Controller.h"
 #include "Logging/LogMacros.h"
+#include "Weapon/STUBaseWeapon.h"
+
 
 DEFINE_LOG_CATEGORY_STATIC(BaseCharacterLog, All, All);
 
@@ -43,6 +45,9 @@ void ASTUBaseCharacter::BeginPlay()
     STUHealth->OnDeath.AddUObject(this, &ASTUBaseCharacter::OnDeath);
     STUHealth->OnHealthChanged.AddUObject(this, &ASTUBaseCharacter::OnHealthChanged);
 
+    LandedDelegate.AddDynamic(this, &ASTUBaseCharacter::OnGroundLanded);
+
+    SpawnWeapon();
 }
 
 void ASTUBaseCharacter::Tick(float DeltaTime)
@@ -120,5 +125,34 @@ void ASTUBaseCharacter::OnHealthChanged(float Health)
     UE_LOG(BaseCharacterLog, Error, TEXT("TEXT1 is %f"), Health);
     TestRender->SetText(FText::FromString(FString::Printf(TEXT("%.0f"), Health)));
     UE_LOG(BaseCharacterLog, Error, TEXT("TEXt2 is %f"), Health);
+}
+
+void ASTUBaseCharacter::OnGroundLanded(const FHitResult& Hit) 
+{
+    const auto FallVelocityZ = GetCharacterMovement()->Velocity.Z;
+
+    UE_LOG(BaseCharacterLog, Warning, TEXT("On lended %f"), FallVelocityZ);
+
+    if (-FallVelocityZ < LandedVectorVelocity.X)
+        return;
+
+    const auto FinalDamage = FMath::GetMappedRangeValueClamped(LandedVectorVelocity, LandedDamage, -FallVelocityZ);
+    UE_LOG(BaseCharacterLog, Warning, TEXT("FinalDamage %f"), FinalDamage);
+    TakeDamage(FinalDamage, FDamageEvent{}, nullptr, nullptr);
+
+
+}
+
+void ASTUBaseCharacter::SpawnWeapon() 
+{
+    if (!GetWorld()) return;
+    const auto Weapon = GetWorld()->SpawnActor<ASTUBaseWeapon>(WeaponClass);
+
+    if (Weapon)
+    {
+        FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
+        Weapon->AttachToComponent(GetMesh(), AttachmentRules, "WeaponSocet");
+    }
+
 }
 

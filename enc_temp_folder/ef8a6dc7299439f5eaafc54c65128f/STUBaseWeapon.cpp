@@ -30,11 +30,21 @@ void ASTUBaseWeapon::MakeShot()
 {
     if (!GetWorld())
         return;
-    
+
+    const auto Player = Cast<ACharacter>(GetOwner());
+
+    if (!Player)
+        return;
+
+    const auto Controller = Player->GetController<APlayerController>();
+    if (!Controller)
+        return;
+
     FVector ViewLocation;
     FRotator ViewRotation;
-    GetPlayerViewPoint(ViewLocation, ViewRotation);
+    Controller->GetPlayerViewPoint(ViewLocation, ViewRotation);
 
+    const FTransform SocketTransform = WeaponMesh->GetSocketTransform(MuzzleSocketName);
     const FVector TraceStart = ViewLocation; // SocketTransform.GetLocation();
     const FVector ShootDirection = ViewRotation.Vector();//SocketTransform.GetRotation().GetForwardVector();
     const FVector TraceEnd = TraceStart + ShootDirection * TraceMaxDistance;
@@ -48,8 +58,7 @@ void ASTUBaseWeapon::MakeShot()
 
     if (HitResult.bBlockingHit)
     {
-        MakeDamage(HitResult);
-        DrawDebugLine(GetWorld(), GetMuzzleWorldLocation(), HitResult.ImpactPoint, FColor::Red, false, 3.0f, 0, 3.0f);
+        DrawDebugLine(GetWorld(), SocketTransform.GetLocation(), HitResult.ImpactPoint, FColor::Red, false, 3.0f, 0, 3.0f);
         UE_LOG(LogBaseWeapon, Warning, TEXT("Fired to the %s"), *HitResult.BoneName.ToString());
 
         //HitResult.
@@ -58,39 +67,8 @@ void ASTUBaseWeapon::MakeShot()
     }
     else
     {
-        DrawDebugLine(GetWorld(), GetMuzzleWorldLocation(), TraceEnd, FColor::Red, false, 3.0f, 0, 3.0f);
+        DrawDebugLine(GetWorld(), SocketTransform.GetLocation(), TraceEnd, FColor::Red, false, 3.0f, 0, 3.0f);
     }
 }
 
-APlayerController* ASTUBaseWeapon::GetPlayerController() const
-{
-    const auto Player = Cast<ACharacter>(GetOwner());
 
-    if (!Player)
-        return nullptr;
-
-    return Player->GetController<APlayerController>();
-}
-
-bool ASTUBaseWeapon::GetPlayerViewPoint(FVector& ViewLocation, FRotator& ViewRotation) const
-{
-    const auto Controller = GetPlayerController();
-    if (!Controller)
-        return false;
-
-    Controller->GetPlayerViewPoint(ViewLocation, ViewRotation);
-    return true;
-}
-
-FVector ASTUBaseWeapon::GetMuzzleWorldLocation() const 
-{
-    return WeaponMesh->GetSocketLocation(MuzzleSocketName);
-}
-
-void ASTUBaseWeapon::MakeDamage(const FHitResult& HitResult) 
-{
-    const auto DamagedActor = HitResult.GetActor();
-    if (!DamagedActor)
-        return;
-    DamagedActor->TakeDamage(DamageAmount, FDamageEvent(), GetPlayerController(), this);
-}

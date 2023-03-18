@@ -25,8 +25,7 @@ protected:
 
 
 public:	
-    void StartFire();
-    void StopFire();
+      void Fire();
 
 private:
     UPROPERTY()

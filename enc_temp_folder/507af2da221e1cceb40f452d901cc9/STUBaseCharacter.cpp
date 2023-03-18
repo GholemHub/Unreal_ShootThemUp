@@ -11,6 +11,8 @@
 #include "GameFramework/Controller.h"
 #include "Logging/LogMacros.h"
 #include "Components/STUWeaponComponent.h"
+#include "Components/CapsuleComponent.h"
+
 
 
 
@@ -124,6 +126,7 @@ void ASTUBaseCharacter::OnDeath()
     {
         Controller->ChangeState(NAME_Spectating);
     }
+    GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 }
 
 void ASTUBaseCharacter::OnHealthChanged(float Health) 

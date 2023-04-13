@@ -18,15 +18,11 @@ public:
 	ASTUBaseWeapon();
     virtual void StartFire();
     virtual void StopFire();
+    virtual void MakeShot();
 
 protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Damage")
     float DamageAmount = 10.0f;
-
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Fire")
-    float TimeBetweenShots = 0.1f;
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Fire")
-    float BulletSpread = 1.5f;
     
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component")
     USkeletalMeshComponent* WeaponMesh;
@@ -38,12 +34,12 @@ protected:
 
 	virtual void BeginPlay() override;
 
-private:
-    void MakeShot();
+
+    
     APlayerController* GetPlayerController() const;
     bool GetPlayerViewPoint(FVector&, FRotator&)const;
     FVector GetMuzzleWorldLocation() const;
     void MakeDamage(const FHitResult& HitResult);
-    FTimerHandle ShotTimerHandle;
+    virtual bool GetTraceData(FVector&, FVector&) const;
     
 };

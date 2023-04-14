@@ -16,17 +16,16 @@ class SHOOTTHEMUP_API ASTURifleWeapon : public ASTUBaseWeapon
 public:
 	virtual void StartFire() override;
     virtual void StopFire() override;
-
-protected:
     virtual void MakeShot() override;
+	protected:
     
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Fire")
     float TimeBetweenShots = 0.1f;
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Fire")
     float BulletSpread = 1.5f;
-    virtual bool GetTraceData(FVector&, FVector&) const override;
 
-private:
+	private:
     FTimerHandle ShotTimerHandle;
+        virtual bool GetTraceData(FVector&, FVector&) const override;
 };

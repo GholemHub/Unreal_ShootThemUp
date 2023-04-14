@@ -80,13 +80,3 @@ bool ASTUBaseWeapon::GetTraceData(FVector& TraceStart, FVector& TraceEnd) const
     TraceEnd = TraceStart + ShootDirection * TraceMaxDistance;
     return true;
 }
-
-void ASTUBaseWeapon::MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd)
-{
-    if (!GetWorld())
-        return;
-    FCollisionQueryParams CollisionParams;
-    CollisionParams.AddIgnoredActor(GetOwner());
-
-    GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility, CollisionParams);
-}

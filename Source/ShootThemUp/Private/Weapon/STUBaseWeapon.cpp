@@ -72,7 +72,7 @@ bool ASTUBaseWeapon::GetTraceData(FVector& TraceStart, FVector& TraceEnd) const
 {
     FVector ViewLocation;
     FRotator ViewRotation;
-    if (GetPlayerViewPoint(ViewLocation, ViewRotation))
+    if (!GetPlayerViewPoint(ViewLocation, ViewRotation))
         return false;
 
     TraceStart = ViewLocation;

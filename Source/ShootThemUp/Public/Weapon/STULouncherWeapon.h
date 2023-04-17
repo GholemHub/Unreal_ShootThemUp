@@ -12,6 +12,7 @@
 
 class ASTUProjectile;
 
+
 UCLASS()
 class SHOOTTHEMUP_API ASTULouncherWeapon : public ASTUBaseWeapon
 {
@@ -21,8 +22,7 @@ public:
 
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-    TSubclassOf<ASTUProjectile> ProjectClass;
-
+    TSubclassOf<ASTUProjectile> ProjectileClass;
     virtual void MakeShot() override;
 	
 };

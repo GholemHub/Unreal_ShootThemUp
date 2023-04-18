@@ -21,7 +21,8 @@ public:
     virtual void MakeShot();
 
 protected:
-    
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Damage")
+    float DamageAmount = 10.0f;
     
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component")
     USkeletalMeshComponent* WeaponMesh;
@@ -38,5 +39,7 @@ protected:
     APlayerController* GetPlayerController() const;
     bool GetPlayerViewPoint(FVector&, FRotator&)const;
     FVector GetMuzzleWorldLocation() const;
+    void MakeDamage(const FHitResult& HitResult);
+    
     
 };

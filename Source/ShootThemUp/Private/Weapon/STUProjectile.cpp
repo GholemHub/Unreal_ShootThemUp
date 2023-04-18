@@ -29,12 +29,11 @@ void ASTUProjectile::BeginPlay()
 	Super::BeginPlay();
     UE_LOG(LogProjectile, Warning, TEXT("Start"))
 
-	//check(MovementComponent);
-    //check(CollisionComponent);
+	check(MovementComponent);
+    check(CollisionComponent);
 
     MovementComponent->Velocity = ShotDirection * MovementComponent->InitialSpeed;
     CollisionComponent->OnComponentHit.AddDynamic(this, &ASTUProjectile::OnProjectileHit);
-    //CollisionComponent->OnComponentHit.AddDynamic(this, &ASTUProjectile::OnProjectileHit2);
 
 	SetLifeSpan(LifeSeconds);
 }
@@ -63,13 +62,6 @@ void ASTUProjectile::OnProjectileHit(
     Destroy();
 }
 
-void ASTUProjectile::OnProjectileHit2(
-    UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
-{
-
-    UE_LOG(LogProjectile, Warning, TEXT("DAMAGED2"))
-
-}
 
 AController* ASTUProjectile::GetController() const
 {

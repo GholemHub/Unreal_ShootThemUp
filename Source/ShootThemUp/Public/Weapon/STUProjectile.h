@@ -20,9 +20,9 @@ public:
 	void SetShotDirection(const FVector& Direction) { ShotDirection = Direction; }
 
 protected:
-    UPROPERTY(VisibleDefaultsOnly, Category = "Weapon")
+    UPROPERTY(VisibleAnywhere, Category = "Weapon")
 		USphereComponent* CollisionComponent;
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
     UProjectileMovementComponent* MovementComponent;
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     float DamageRadius = 200.0f;

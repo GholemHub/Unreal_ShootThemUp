@@ -20,8 +20,7 @@ public:
 protected:
     virtual void MakeShot() override;
     
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Damage")
-    float DamageAmount = 10.0f;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Fire")
     float TimeBetweenShots = 0.1f;
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Fire")
@@ -30,5 +29,4 @@ protected:
 
 private:
     FTimerHandle ShotTimerHandle;
-    void MakeDamage(const FHitResult& HitResult);
 };

@@ -40,13 +40,6 @@ void ASTURifleWeapon::MakeShot()
         DrawDebugLine(GetWorld(), GetMuzzleWorldLocation(), TraceEnd, FColor::Red, false, 3.0f, 0, 3.0f);
     }
 }
-void ASTURifleWeapon::MakeDamage(const FHitResult& HitResult)
-{
-    const auto DamagedActor = HitResult.GetActor();
-    if (!DamagedActor)
-        return;
-    DamagedActor->TakeDamage(DamageAmount, FDamageEvent(), GetPlayerController(), this);
-}
 
 bool ASTURifleWeapon::GetTraceData(FVector& TraceStart, FVector& TraceEnd) const
 {

@@ -13,12 +13,13 @@ void ASTURifleWeapon::StartFire()
 
 void ASTURifleWeapon::StopFire()
 {
+    MakeShot();
     GetWorldTimerManager().ClearTimer(ShotTimerHandle);
 }
 
 void ASTURifleWeapon::MakeShot()
 {
-    UE_LOG(LogTemp, Display, TEXT("Make shot"));
+    //UE_LOG(LogTemp, Display, TEXT("Make shot"));
     if (!GetWorld() || IsAmmoEmpty())
     {
         StopFire();

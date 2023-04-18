@@ -12,7 +12,7 @@ void ASTULouncherWeapon::StartFire() {
 
 void ASTULouncherWeapon::MakeShot()
 {
-     if (!GetWorld())
+     if (!GetWorld() || IsAmmoEmpty())
         return;
 
     FVector TraceStart, TraceEnd;
@@ -38,5 +38,5 @@ void ASTULouncherWeapon::MakeShot()
 
     UGameplayStatics::FinishSpawningActor(Projectile, SpawnTransform);
     
-    
+    DecreaseAmmo();
 }

@@ -45,6 +45,7 @@ private:
 
 
     int32 CurrentWeaponIndex = 0;
+    bool EquipAnimInProcess = false;
 
     void SpawnWeapons();
     void AttachWeaponToSocket(ASTUBaseWeapon* Weapon, USceneComponent* SceneComponent, const FName& SocketName);
@@ -54,4 +55,8 @@ private:
     void InitAnimations();
     void OnEquipFinished(USkeletalMeshComponent* MeshComponent);
   
+    bool CanFire() const;
+    bool CanEquip() const;
+
+
 };

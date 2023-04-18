@@ -44,9 +44,9 @@ void USTUWeaponComponent::SpawnWeapons()
     if (!GetWorld() || !Character)
         return;
 
-    for (auto WeaponClass : WeaponClasses)
+    for (auto OneWeaponData : WeaponData)
     {
-        auto Weapon = GetWorld()->SpawnActor<ASTUBaseWeapon>(WeaponClass); 
+        auto Weapon = GetWorld()->SpawnActor<ASTUBaseWeapon>(OneWeaponData.WeaponClasses); 
         if (!Weapon)
             return;
         Weapon->SetOwner(Character);
@@ -54,9 +54,6 @@ void USTUWeaponComponent::SpawnWeapons()
 
         AttachWeaponToSocket(Weapon, Character->GetMesh(), WeaponArmorySocketName);
     }
-
-    
-    
 }
 
 void USTUWeaponComponent::AttachWeaponToSocket(ASTUBaseWeapon* Weapon, USceneComponent* SceneComponent, const FName& SocketName) 
@@ -69,6 +66,12 @@ void USTUWeaponComponent::AttachWeaponToSocket(ASTUBaseWeapon* Weapon, USceneCom
 
 void USTUWeaponComponent::EquipWeapon(int32 WeaponIndex = 0) 
 {
+    if (WeaponIndex < 0 || WeaponIndex >= Weapons.Num())
+    {
+        UE_LOG(LogWeaponComponent, Error, TEXT("Invalid weapon index"));
+        return;
+    }
+
     ACharacter* Character = Cast<ACharacter>(GetOwner());
     if (!Character)
         return;
@@ -80,11 +83,16 @@ void USTUWeaponComponent::EquipWeapon(int32 WeaponIndex = 0)
     }
     //Add next to have weapon at the beginig(Have a mistakes)
     //AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponEquipSocketName); 
-    if (Weapons.Num() > 0) // weapons is empty at the begining
-    {
+    //if (Weapons.Num() > 0) // weapons is empty at the begining
+    //{
         CurrentWeapon = Weapons[WeaponIndex];
+        //CurrentReloadAnimMontage = WeaponData[WeaponIndex].ReloadAnimMintage;
+        const auto CurrentWeaponData =
+            WeaponData.FindByPredicate([&](const FWeaponData& Data) { return Data.WeaponClasses == CurrentWeapon->GetClass(); });
+
+        CurrentReloadAnimMontage = CurrentWeaponData ? CurrentWeaponData->ReloadAnimMontage : nullptr;
         AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponEquipSocketName);
-    }
+    //}
     EquipAnimInProcess = true;
     PlayAnimMontage(EquipAnimMontage);
     
@@ -110,6 +118,11 @@ void USTUWeaponComponent::NextWeapon()
         return;
     CurrentWeaponIndex = (CurrentWeaponIndex + 1) % Weapons.Num();
     EquipWeapon(CurrentWeaponIndex);
+}
+
+void USTUWeaponComponent::Reload() 
+{
+    PlayAnimMontage(CurrentReloadAnimMontage);
 }
 
 

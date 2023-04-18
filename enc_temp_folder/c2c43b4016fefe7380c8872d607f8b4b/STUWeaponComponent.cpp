@@ -22,19 +22,6 @@ void USTUWeaponComponent::BeginPlay()
     SpawnWeapons();
 }
 
-void USTUWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason) 
-{
-    CurrentWeapon = nullptr;
-    for (auto Weapon : Weapons)
-    {
-        Weapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
-        Weapon->Destroy();
-    }
-
-    Weapons.Empty();
-    Super::EndPlay(EndPlayReason);
-}
-
 void USTUWeaponComponent::SpawnWeapons()
 {
     ACharacter* Character = Cast<ACharacter>(GetOwner());
@@ -72,12 +59,10 @@ void USTUWeaponComponent::EquipWeapon(int32 WeaponIndex = 0)
 
     if (CurrentWeapon)
     {
-        CurrentWeapon->StopFire();
         AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponArmorySocketName);
     }
-    //Add next to have weapon at the beginig(Have a mistakes)
-    //AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponEquipSocketName); 
-    if (Weapons.Num() > 0) // weapons is empty at the begining
+    //AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponEquipSocketName);
+    if (Weapons.Num() > 0)
     {
         CurrentWeapon = Weapons[WeaponIndex];
         AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponEquipSocketName);

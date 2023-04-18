@@ -28,7 +28,7 @@ protected:
     UPROPERTY(EditDefaultsOnly, Category = "Weapon")
     FName WeaponArmorySocketName = "ArmorySocket";
 
-    virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
 
 
 private:

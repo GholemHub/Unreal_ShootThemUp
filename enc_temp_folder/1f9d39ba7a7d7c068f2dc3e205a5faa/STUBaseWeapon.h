@@ -6,8 +6,6 @@
 #include "GameFramework/Actor.h"
 #include "STUBaseWeapon.generated.h"
 
-DECLARE_MULTICAST_DELEGATE(FOnClipEmptySignature);
-
 class USkeletalMeshComponent;
 
 USTRUCT(BlueprintType)
@@ -29,19 +27,15 @@ class SHOOTTHEMUP_API ASTUBaseWeapon : public AActor
     GENERATED_BODY()
 
 public:	
+	
 	ASTUBaseWeapon();
-
-    FOnClipEmptySignature OnClipEmpty;
-
     virtual void StartFire();
     virtual void StopFire();
     virtual void MakeShot();
 
-    void ChangeClip();
-    bool CanReload() const;
-
 protected:
-
+    
+    
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component")
     USkeletalMeshComponent* WeaponMesh;
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
@@ -64,10 +58,8 @@ protected:
     void DecreaseAmmo();
     bool IsAmmoEmpty() const;
     bool IsClipEmpty() const;
-    
+    void ChangeClip();
     void LogAmmo();
-
-
 
 private:
     FAmmoData CurrentAmmo;

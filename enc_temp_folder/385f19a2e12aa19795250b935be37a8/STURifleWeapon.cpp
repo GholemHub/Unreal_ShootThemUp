@@ -7,8 +7,8 @@
 
 void ASTURifleWeapon::StartFire()
 {
-    GetWorldTimerManager().SetTimer(ShotTimerHandle, this, &ASTURifleWeapon::MakeShot, TimeBetweenShots, true);
     MakeShot();
+    GetWorldTimerManager().SetTimer(ShotTimerHandle, this, &ASTURifleWeapon::MakeShot, TimeBetweenShots, true);
 }
 
 void ASTURifleWeapon::StopFire()
@@ -19,12 +19,12 @@ void ASTURifleWeapon::StopFire()
 void ASTURifleWeapon::MakeShot()
 {
     UE_LOG(LogTemp, Display, TEXT("Make shot"));
-    
     if (!GetWorld() || IsAmmoEmpty())
     {
         StopFire();
         return;
     }
+    
 
     FVector TraceStart, TraceEnd;
 
@@ -46,6 +46,7 @@ void ASTURifleWeapon::MakeShot()
     {
         DrawDebugLine(GetWorld(), GetMuzzleWorldLocation(), TraceEnd, FColor::Red, false, 3.0f, 0, 3.0f);
     }
+
     DecreaseAmmo();
 }
 void ASTURifleWeapon::MakeDamage(const FHitResult& HitResult)

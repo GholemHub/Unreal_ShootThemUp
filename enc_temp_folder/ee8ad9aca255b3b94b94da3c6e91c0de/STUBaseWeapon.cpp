@@ -64,30 +64,18 @@ FVector ASTUBaseWeapon::GetMuzzleWorldLocation() const
 
 void ASTUBaseWeapon::DecreaseAmmo() 
 {
-    if (CurrentAmmo.Bullets == 0)
-    {
-        UE_LOG(LogBaseWeapon, Error, TEXT("Clip is empty %d"), CurrentAmmo.Bullets);
-        StopFire();
-        return;
-    }
-    
-    UE_LOG(LogBaseWeapon, Warning, TEXT("CurrentAmmo.Bullets:: %d"), CurrentAmmo.Bullets);
     CurrentAmmo.Bullets--;
     LogAmmo();
 
     if (IsClipEmpty() && !IsAmmoEmpty())
     {
-        StopFire();
-        OnClipEmpty.Broadcast();
+        ChangeClip();
     }
-    
 }
 
 bool ASTUBaseWeapon::IsAmmoEmpty() const
 {
-    return !CurrentAmmo.Infinite 
-        && CurrentAmmo.Clips == 0 
-        && IsClipEmpty();
+    return !CurrentAmmo.Infinite && CurrentAmmo.Clips == 0 && IsClipEmpty();
 }
 
 bool ASTUBaseWeapon::IsClipEmpty() const
@@ -97,27 +85,12 @@ bool ASTUBaseWeapon::IsClipEmpty() const
 
 void ASTUBaseWeapon::ChangeClip() 
 {
-    
+    CurrentAmmo.Bullets = DefaultAmmo.Bullets;
     if (!CurrentAmmo.Infinite)
     {
-        if (CurrentAmmo.Clips == 0)
-        {
-            UE_LOG(LogTemp, Error, TEXT("No more clips"));
-            return;
-        }
         CurrentAmmo.Clips--;
     }
-
-    CurrentAmmo.Bullets = DefaultAmmo.Bullets;
-    
-
     UE_LOG(LogBaseWeapon, Display, TEXT("------Change Clip------"));
-}
-
-bool ASTUBaseWeapon::CanReload() const
-{
-    return CurrentAmmo.Bullets < DefaultAmmo.Bullets 
-        && CurrentAmmo.Clips > 0;
 }
 
 void ASTUBaseWeapon::LogAmmo() 

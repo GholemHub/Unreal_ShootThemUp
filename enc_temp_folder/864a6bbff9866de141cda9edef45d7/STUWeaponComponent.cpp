@@ -151,7 +151,7 @@ void USTUWeaponComponent::InitAnimations()
         auto ReloadFinishedNotify = FindNotifyByClass<USTUReloadFinishedAnimNotify>(OneWeaponData.ReloadAnimMontage);
         if (!ReloadFinishedNotify)
             continue;
-        ReloadFinishedNotify->OnNotified.AddUObject(this, &USTUWeaponComponent::OnReloadFinished);
+        ReloadFinishedNotify->OnNotified.AddUObject(this, &USTUWeaponComponent::OnEquipFinished);
     }
 }
 
@@ -178,7 +178,7 @@ void USTUWeaponComponent::OnReloadFinished(USkeletalMeshComponent* MeshComponent
 
 bool USTUWeaponComponent::CanFire() const
 {
-    return CurrentWeapon && !EquipAnimInProcess && !ReloadAnimInProgress;
+    return CurrentWeapon && !EquipAnimInProcess;
 }
 
 bool USTUWeaponComponent::CanEquip() const

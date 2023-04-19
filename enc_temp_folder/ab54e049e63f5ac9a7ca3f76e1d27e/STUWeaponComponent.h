@@ -75,8 +75,7 @@ private:
     bool CanEquip() const;
     bool CanReload() const;
 
-    template<typename T> 
-    T* FindNotifyByClass(UAnimSequenceBase* Animation) 
+    template<typename T> T* FindNotifyByClass(UAnimSequenceBase* Animation) 
     {
         if (!Animation)
             return nullptr;

@@ -79,6 +79,7 @@ void ASTUBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
     PlayerInputComponent->BindAction("Reload", IE_Released, WeaponComponent, &USTUWeaponComponent::Reload);
 }
 
+
 bool ASTUBaseCharacter::IsRunning() const
 {
     return WantsToRun && IsMovingForward && !GetVelocity().IsZero();

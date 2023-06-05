@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "Develop/STUCoreTypes.h"
+#include "Weapon/STUBaseWeapon.h"
 #include "STUWeaponComponent.generated.h"
 
 class ASTUBaseWeapon;
@@ -34,6 +35,7 @@ public:
     void Reload();
 
     bool GetWeaponUIData(FWeaponUIData& UIData) const;
+    bool GetCurrentWeaponAmmoUIData(FAmmoData& AmmoUIData) const;
     
 
 protected:

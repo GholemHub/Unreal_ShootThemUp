@@ -30,3 +30,19 @@ bool USTUPlayerHUDWidget::GetWeaponUIData(FWeaponUIData& UIData) const
         return false;
     return WeaponComponent->GetWeaponUIData(UIData);
 }
+
+bool USTUPlayerHUDWidget::GetCurrentWeaponUIAmmoData(FAmmoData& AmmoUIData) const
+{
+    const auto Player = GetOwningPlayerPawn();
+    if (!Player)
+        return false;
+
+    const auto Component = Player->GetComponentByClass(USTUWeaponComponent::StaticClass());
+    const auto WeaponComponent = Cast<USTUWeaponComponent>(Component);
+    if (!WeaponComponent)
+    {
+        return false;
+    }
+
+    return WeaponComponent->GetCurrentWeaponAmmoUIData(AmmoUIData);
+}

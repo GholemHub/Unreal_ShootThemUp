@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Develop/STUCoreTypes.h"
+#include "Weapon/STUBaseWeapon.h"
 #include "STUPlayerHUDWidget.generated.h"
 
 /**
@@ -19,4 +20,6 @@ public:
     float GetHealthPervent() const;
     UFUNCTION(BlueprintCallable, Category = "UI")
     bool GetWeaponUIData(FWeaponUIData& UIData) const;
+    UFUNCTION(BlueprintCallable, Category = "UI")
+    bool GetCurrentWeaponUIAmmoData(FAmmoData& AmmoUIData) const;
 };

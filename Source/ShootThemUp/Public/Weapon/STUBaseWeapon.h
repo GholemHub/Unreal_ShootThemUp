@@ -42,6 +42,7 @@ public:
     bool CanReload() const;
 
     FWeaponUIData GetUIData() const { return UIData; };
+    FAmmoData GetAmmoUIData() const { return CurrentAmmo; };
 
 protected:
 

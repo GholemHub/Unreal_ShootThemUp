@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Develop/STUCoreTypes.h"
 #include "STUBaseWeapon.generated.h"
 
 DECLARE_MULTICAST_DELEGATE(FOnClipEmptySignature);
@@ -40,6 +41,8 @@ public:
     void ChangeClip();
     bool CanReload() const;
 
+    FWeaponUIData GetUIData() const { return UIData; };
+
 protected:
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component")
@@ -52,6 +55,9 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     FAmmoData DefaultAmmo{15, 10, false};
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
+    FWeaponUIData UIData;
 
 	virtual void BeginPlay() override;
     virtual bool GetTraceData(FVector&, FVector&) const;
@@ -66,8 +72,6 @@ protected:
     bool IsClipEmpty() const;
     
     void LogAmmo();
-
-
 
 private:
     FAmmoData CurrentAmmo;

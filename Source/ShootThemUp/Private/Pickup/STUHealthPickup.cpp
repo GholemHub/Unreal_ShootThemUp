@@ -3,3 +3,8 @@
 
 #include "Pickup/STUHealthPickup.h"
 
+bool ASTUHealthPickup::GivePickupTo(APawn* PlayerPawn)
+{
+    UE_LOG(LogTemp, Warning, TEXT("Heal was taking"))
+    return true;
+}

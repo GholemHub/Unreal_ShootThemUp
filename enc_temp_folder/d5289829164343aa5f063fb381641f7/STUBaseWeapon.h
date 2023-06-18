@@ -7,7 +7,7 @@
 #include "Develop/STUCoreTypes.h"
 #include "STUBaseWeapon.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnClipEmptySignature, ASTUBaseWeapon*);
+DECLARE_MULTICAST_DELEGATE(FOnClipEmptySignature);
 
 class USkeletalMeshComponent;
 
@@ -44,8 +44,6 @@ public:
     FWeaponUIData GetUIData() const { return UIData; };
     FAmmoData GetAmmoUIData() const { return CurrentAmmo; };
 
-    bool TryToAddAmmo(int32 ClipsAmount);
-
 protected:
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component")
@@ -73,7 +71,6 @@ protected:
     void DecreaseAmmo();
     bool IsAmmoEmpty() const;
     bool IsClipEmpty() const;
-    bool IsAmmoFull() const;
     
     void LogAmmo();
 

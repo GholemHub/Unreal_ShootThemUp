@@ -18,9 +18,6 @@ public:
     UPROPERTY(VisibleAnywhere, Category = "Pickup")
     USphereComponent* CollisionComponent;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup")
-    float RespawnTime = 5.0f;
-
 	ASTUBasePickup();
 
 protected:
@@ -33,8 +30,4 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-private:
-    virtual bool GivePickupTo(APawn* PlayerPawn);
-    void PickUpWasTaken();
-    void Respawn();
 };

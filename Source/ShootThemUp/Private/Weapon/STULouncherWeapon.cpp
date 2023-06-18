@@ -37,6 +37,6 @@ void ASTULouncherWeapon::MakeShot()
     // Set pr params
 
     UGameplayStatics::FinishSpawningActor(Projectile, SpawnTransform);
-    
+
     DecreaseAmmo();
 }

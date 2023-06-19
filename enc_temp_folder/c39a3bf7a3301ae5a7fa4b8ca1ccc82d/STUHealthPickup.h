@@ -4,14 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "Pickup/STUBasePickup.h"
-#include "STUAmmoPickup.generated.h"
+#include "STUHealthPickup.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class SHOOTTHEMUP_API ASTUAmmoPickup : public ASTUBasePickup
+class SHOOTTHEMUP_API ASTUHealthPickup : public ASTUBasePickup
 {
 	GENERATED_BODY()
-	
+private:
+    virtual bool GivePickupTo(APawn* PlayerPawn) override;
 };

@@ -10,22 +10,6 @@ USTUHealthComponent::USTUHealthComponent()
     PrimaryComponentTick.bCanEverTick = false;
 }
 
-bool USTUHealthComponent::TryToHeal(float HealthPoint)
-{
-
-    if (Health != 0 && Health != MaxHealth)
-    {
-        SetHealth(Health + HealthPoint);
-        UE_LOG(LogHealthComponent, Error, TEXT("Added health"));   
-        return true;
-    }
-    else
-    {
-        UE_LOG(LogHealthComponent, Error, TEXT("Not Added health"));   
-        return false;
-    }
-}
-
 // Called when the game starts
 void USTUHealthComponent::BeginPlay()
 {

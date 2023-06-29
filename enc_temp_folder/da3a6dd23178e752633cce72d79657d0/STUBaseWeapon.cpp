@@ -97,8 +97,8 @@ bool ASTUBaseWeapon::IsClipEmpty() const
 
 bool ASTUBaseWeapon::IsAmmoFull() const
 {
-    return CurrentAmmo.Clips == DefaultAmmo.Clips 
-        && CurrentAmmo.Bullets == DefaultAmmo.Bullets;
+    return CurrentAmmo.Clips == DefaultAmmo.Clips && CurrentAmmo.Bullets == DefaultAmmo.Bullets;
+        ;    
 }
 
 void ASTUBaseWeapon::ChangeClip() 
@@ -128,7 +128,6 @@ bool ASTUBaseWeapon::CanReload() const
 
 bool ASTUBaseWeapon::TryToAddAmmo(int32 ClipsAmount)
 {
-
     if (CurrentAmmo.Infinite || IsAmmoFull() || ClipsAmount <= 0)
         return false;
     if (IsAmmoEmpty())

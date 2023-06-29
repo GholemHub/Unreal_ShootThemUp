@@ -9,7 +9,6 @@
 
 bool ASTUAmmoPickup::GivePickupTo(APawn* PlayerPawn)
 {
-    UE_LOG(LogTemp, Error, TEXT("USTUWeaponComponent::TryToAddAmmo"));
     const auto HealthCimponent = STUUtils::GetSTUPlayerComponent<USTUHealthComponent>(PlayerPawn);
     if (!HealthCimponent || HealthCimponent->IsDead())
         return false;

@@ -230,13 +230,15 @@ bool USTUWeaponComponent::GetCurrentWeaponAmmoUIData(FAmmoData& AmmoData) const
 
 bool USTUWeaponComponent::TryToAddAmmo(TSubclassOf<ASTUBaseWeapon> WeaponType, int32 ClipAmount)
 {
+        //UE_LOG(LogTemp, Error, TEXT("USTUWeaponComponent::TryToAddAmmo"));
         for (const auto Weapon: Weapons)
         {
             if (Weapon && Weapon->IsA(WeaponType))
             {
-            return Weapon->TryToAddAmmo(ClipAmount);
+                return Weapon->TryToAddAmmo(ClipAmount);
             }
         }
+
         return false;
 }
 

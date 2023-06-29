@@ -22,8 +22,9 @@ void USTUWeaponComponent::BeginPlay()
 	Super::BeginPlay();
     CurrentWeaponIndex = 0;
     InitAnimations();
-    EquipWeapon(CurrentWeaponIndex);
     SpawnWeapons();
+    EquipWeapon(CurrentWeaponIndex);
+    
 }
 
 void USTUWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason) 
@@ -49,9 +50,10 @@ void USTUWeaponComponent::SpawnWeapons()
     {
         auto Weapon = GetWorld()->SpawnActor<ASTUBaseWeapon>(OneWeaponData.WeaponClasses); 
         if (!Weapon)
-            continue;
-        Weapon->OnClipEmpty.AddUObject(this, &USTUWeaponComponent::OnEmptyClip);
+            return;
         Weapon->SetOwner(Character);
+        Weapon->OnClipEmpty.AddUObject(this, &USTUWeaponComponent::OnEmptyClip);
+       
         Weapons.Add(Weapon);
 
         AttachWeaponToSocket(Weapon, Character->GetMesh(), WeaponArmorySocketName);
@@ -66,7 +68,7 @@ void USTUWeaponComponent::AttachWeaponToSocket(ASTUBaseWeapon* Weapon, USceneCom
     Weapon->AttachToComponent(SceneComponent, AttachmentRules, SocketName);
 }
 
-void USTUWeaponComponent::EquipWeapon(int32 WeaponIndex = 0) 
+void USTUWeaponComponent::EquipWeapon(int32 WeaponIndex) 
 {
     if (WeaponIndex < 0 || WeaponIndex >= Weapons.Num())
     {

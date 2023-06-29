@@ -9,9 +9,6 @@
 /**
  * 
  */
-
-class USTUWeaponFXComponent;
-
 UCLASS()
 class SHOOTTHEMUP_API ASTURifleWeapon : public ASTUBaseWeapon
 {
@@ -22,7 +19,7 @@ public:
 
 protected:
     virtual void MakeShot() override;
-    ASTURifleWeapon();
+    
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Damage")
     float DamageAmount = 10.0f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Fire")
@@ -30,12 +27,6 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Fire")
     float BulletSpread = 1.5f;
     virtual bool GetTraceData(FVector&, FVector&) const override;
-
-    virtual void BeginPlay() override;
-
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "VFX")
-    USTUWeaponFXComponent* WeaponFXComponent;
-   
 
 private:
     FTimerHandle ShotTimerHandle;

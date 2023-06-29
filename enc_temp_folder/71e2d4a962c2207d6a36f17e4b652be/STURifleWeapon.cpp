@@ -4,20 +4,7 @@
 #include "Weapon/STURifleWeapon.h"
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
-#include "Components/STUWeaponFXComponent.h"
 
-
-ASTURifleWeapon::ASTURifleWeapon() 
-{
-    WeaponFXComponent = CreateDefaultSubobject<USTUWeaponFXComponent>("WeaponFXComponent");
-}
-
-void ASTURifleWeapon::BeginPlay() 
-{
-    Super::BeginPlay();
-
-    check(WeaponFXComponent);
-}
 void ASTURifleWeapon::StartFire()
 {
     GetWorldTimerManager().SetTimer(ShotTimerHandle, this, &ASTURifleWeapon::MakeShot, TimeBetweenShots, true);
@@ -52,9 +39,8 @@ void ASTURifleWeapon::MakeShot()
     if (HitResult.bBlockingHit)
     {
         MakeDamage(HitResult);
-        //DrawDebugLine(GetWorld(), GetMuzzleWorldLocation(), HitResult.ImpactPoint, FColor::Red, false, 3.0f, 0, 3.0f);
-        //DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.0f, 24, FColor::Red, false, 5.0f);
-        WeaponFXComponent->PlayImpactFX(HitResult);
+        DrawDebugLine(GetWorld(), GetMuzzleWorldLocation(), HitResult.ImpactPoint, FColor::Red, false, 3.0f, 0, 3.0f);
+        DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.0f, 24, FColor::Red, false, 5.0f);
     }
     else
     {
@@ -62,7 +48,6 @@ void ASTURifleWeapon::MakeShot()
     }
     DecreaseAmmo();
 }
-
 void ASTURifleWeapon::MakeDamage(const FHitResult& HitResult)
 {
     const auto DamagedActor = HitResult.GetActor();
@@ -86,4 +71,3 @@ bool ASTURifleWeapon::GetTraceData(FVector& TraceStart, FVector& TraceEnd) const
     TraceEnd = TraceStart + ShootDirection * TraceMaxDistance;
     return true;
 }
-

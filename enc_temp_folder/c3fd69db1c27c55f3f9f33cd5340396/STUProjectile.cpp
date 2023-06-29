@@ -6,7 +6,6 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "DrawDebugHelpers.h"
 #include "Kismet/GameplayStatics.h"
-#include "Components/STUWeaponFXComponent.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogProjectile, All, All);
 
@@ -23,15 +22,11 @@ ASTUProjectile::ASTUProjectile()
 	MovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>("ProjectileMovementComponent");
     MovementComponent->InitialSpeed = 2000.0f;
     MovementComponent->ProjectileGravityScale = 0.0f;
-
-    WeaponFXComponent = CreateDefaultSubobject<USTUWeaponFXComponent>("WeaponFXComponent");
 }
 
 void ASTUProjectile::BeginPlay()
 {
 	Super::BeginPlay();
-
-    check(WeaponFXComponent);
     UE_LOG(LogProjectile, Warning, TEXT("Start"))
 
 	check(MovementComponent);
@@ -63,7 +58,7 @@ void ASTUProjectile::OnProjectileHit(
     UE_LOG(LogProjectile, Warning, TEXT("DAMAGED1"))
 
     DrawDebugSphere(GetWorld(), GetActorLocation(), DamageRadius, 24, FColor::Red, false, 5.0f);
-    WeaponFXComponent->PlayImpactFX(Hit);
+
     Destroy();
 }
 

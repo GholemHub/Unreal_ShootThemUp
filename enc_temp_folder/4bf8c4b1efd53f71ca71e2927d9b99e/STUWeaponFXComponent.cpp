@@ -36,7 +36,7 @@ void USTUWeaponFXComponent::PlayImpactFX(const FHitResult& Hit)
     UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), ImpactData.NiagaraEffect, Hit.ImpactPoint, Hit.ImpactNormal.Rotation());
 	//Decal
     auto DecalComponent = UGameplayStatics::SpawnDecalAtLocation(GetWorld(), //
-        ImpactData.DecalData.Material, ImpactData.DecalData.Size, Hit.ImpactPoint, (Hit.ImpactNormal * -1.0f).Rotation());
+        ImpactData.DecalData.Material, ImpactData.DecalData.Size, Hit.ImpactPoint, Hit.ImpactPoint.Rotation());
 
 	if (DecalComponent)
 	{

@@ -61,7 +61,7 @@ void USTUHealthComponent::OnTakeAnyDamage(
     {
         GetWorld()->GetTimerManager().SetTimer(HealTimerHandle, this, &USTUHealthComponent::HealUpdate, HealUpdateTime, true, HealDelay);
     }
-    PlayCameraShake();
+    //PlayCameraShake();
 }
 
 void USTUHealthComponent::HealUpdate() {

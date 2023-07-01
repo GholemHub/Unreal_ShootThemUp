@@ -7,6 +7,8 @@
 DECLARE_MULTICAST_DELEGATE(FOnDeath)
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnHealthChanged, float)
 
+    class UCameraShakeBase;
+
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class SHOOTTHEMUP_API USTUHealthComponent : public UActorComponent
 {
@@ -43,6 +45,9 @@ protected:
     float HealUpdateTime = 1.0f;
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Health", meta = (Editcondition = "AutoHeal"))
     float HealDelay = 3.0f;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
+    TSubclassOf<UCameraShakeBase> CameraShake;
+
 
 
 private:
@@ -56,6 +61,7 @@ private:
 
     void HealUpdate();
     void SetHealth(float NewHealth);
+    void PlayCameraShake();
 
 
 };

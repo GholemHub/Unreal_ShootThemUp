@@ -13,9 +13,6 @@
 #include "Components/STUWeaponComponent.h"
 #include "Components/CapsuleComponent.h"
 
-
-
-
 DEFINE_LOG_CATEGORY_STATIC(BaseCharacterLog, All, All);
 
 ASTUBaseCharacter::ASTUBaseCharacter(const FObjectInitializer& ObjInit)
@@ -45,6 +42,7 @@ void ASTUBaseCharacter::BeginPlay()
     check(STUHealth);
     check(TestRender);
     check(GetCharacterMovement());
+    check(GetMesh());
 
     OnHealthChanged(STUHealth->GetHealth());
     STUHealth->OnDeath.AddUObject(this, &ASTUBaseCharacter::OnDeath);
@@ -120,7 +118,7 @@ void ASTUBaseCharacter::OnStopRunning()
 
 void ASTUBaseCharacter::OnDeath() 
 {
-    PlayAnimMontage(DeathAnimMintage);
+    //PlayAnimMontage(DeathAnimMintage);
     GetCharacterMovement()->DisableMovement();
     SetLifeSpan(5.0f);
     if (Controller)
@@ -129,6 +127,9 @@ void ASTUBaseCharacter::OnDeath()
     }
     GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
     WeaponComponent->StopFire();
+
+    GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+    GetMesh()->SetSimulatePhysics(true);
 }
 
 void ASTUBaseCharacter::OnHealthChanged(float Health) 

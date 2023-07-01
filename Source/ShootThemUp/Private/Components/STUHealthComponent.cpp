@@ -76,10 +76,12 @@ void USTUHealthComponent::HealUpdate() {
 
 void USTUHealthComponent::SetHealth(float NewHealth)
 {
-    
-    Health = FMath::Clamp(NewHealth, 0.0f, MaxHealth);
+    const auto NextHealth = FMath::Clamp(NewHealth, 0.0f, MaxHealth);
+    const auto HealthDela = NextHealth - Health;
+
+    Health = NextHealth;
     UE_LOG(LogHealthComponent, Error, TEXT("HERE is %f"), Health);
-    OnHealthChanged.Broadcast(Health);
+    OnHealthChanged.Broadcast(Health, HealthDela);
 }
 
 void USTUHealthComponent::PlayCameraShake() 

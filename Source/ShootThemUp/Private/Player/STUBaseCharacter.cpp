@@ -44,7 +44,7 @@ void ASTUBaseCharacter::BeginPlay()
     check(GetCharacterMovement());
     check(GetMesh());
 
-    OnHealthChanged(STUHealth->GetHealth());
+    OnHealthChanged(STUHealth->GetHealth(), 0.0f);
     STUHealth->OnDeath.AddUObject(this, &ASTUBaseCharacter::OnDeath);
     STUHealth->OnHealthChanged.AddUObject(this, &ASTUBaseCharacter::OnHealthChanged);
 
@@ -132,11 +132,9 @@ void ASTUBaseCharacter::OnDeath()
     GetMesh()->SetSimulatePhysics(true);
 }
 
-void ASTUBaseCharacter::OnHealthChanged(float Health) 
+void ASTUBaseCharacter::OnHealthChanged(float Health, float HealthDelta ) 
 {
-    UE_LOG(BaseCharacterLog, Error, TEXT("TEXT1 is %f"), Health);
     TestRender->SetText(FText::FromString(FString::Printf(TEXT("%.0f"), Health)));
-    UE_LOG(BaseCharacterLog, Error, TEXT("TEXt2 is %f"), Health);
 }
 
 void ASTUBaseCharacter::OnGroundLanded(const FHitResult& Hit) 

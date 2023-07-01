@@ -30,7 +30,12 @@ public:
     bool IsPlayerAlive() const;
     UFUNCTION(BlueprintCallable, Category = "UI")
     bool IsPlayerSpectating() const;
+    UFUNCTION(BlueprintImplementableEvent, Category = "UI")
+    void OnTakeDamage();
+
+    virtual bool Initialize() override;
 
 private:
     USTUHealthComponent* GetHealthComponent() const;
+    void OnHealthCanged(float Health, float HealthDelta);
 };

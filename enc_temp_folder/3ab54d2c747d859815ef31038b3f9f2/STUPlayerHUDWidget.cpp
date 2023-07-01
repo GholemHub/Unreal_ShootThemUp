@@ -86,5 +86,5 @@ void USTUPlayerHUDWidget::OnHealthCanged(float Health, float HealthDelta)
         OnTakeDamage();
     }
 
-      
+    
 }

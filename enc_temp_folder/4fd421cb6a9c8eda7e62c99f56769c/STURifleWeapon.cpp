@@ -30,7 +30,7 @@ void ASTURifleWeapon::StopFire()
 {
     
     GetWorldTimerManager().ClearTimer(ShotTimerHandle);
-    SetMuzzleFXVisability(false);
+    
 }
 
 void ASTURifleWeapon::MakeShot()
@@ -87,7 +87,7 @@ void ASTURifleWeapon::InitMuzzleFX()
 void ASTURifleWeapon::SetMuzzleFXVisability(bool Visible) 
 {
 
-    if (MuzzleFXComponent)
+    if (!MuzzleFXComponent)
     {
         MuzzleFXComponent->SetPaused(!Visible);
         MuzzleFXComponent->SetVisibility(Visible, true);

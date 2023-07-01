@@ -10,6 +10,9 @@
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnClipEmptySignature, ASTUBaseWeapon*);
 
 class USkeletalMeshComponent;
+class UNiagaraSystem;
+class UNiagaraComponent;
+
 
 USTRUCT(BlueprintType)
 struct FAmmoData
@@ -62,6 +65,9 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
     FWeaponUIData UIData;
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
+    UNiagaraSystem* MazzleFX;
+
 	virtual void BeginPlay() override;
     virtual bool GetTraceData(FVector&, FVector&) const;
 
@@ -76,6 +82,8 @@ protected:
     bool IsAmmoFull() const;
     
     void LogAmmo();
+
+    UNiagaraComponent* SpawnMuzzleFX();
 
 private:
     FAmmoData CurrentAmmo;

@@ -11,6 +11,7 @@
  */
 
 class USTUWeaponFXComponent;
+class UNiagaraComponent;
 
 UCLASS()
 class SHOOTTHEMUP_API ASTURifleWeapon : public ASTUBaseWeapon
@@ -38,6 +39,11 @@ protected:
    
 
 private:
+    UPROPERTY()
+    UNiagaraComponent* MuzzleFXComponent;
+
     FTimerHandle ShotTimerHandle;
     void MakeDamage(const FHitResult& HitResult);
+    void InitMuzzleFX();
+    void SetMuzzleFXVisability(bool Visable);
 };

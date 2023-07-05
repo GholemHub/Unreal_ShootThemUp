@@ -9,10 +9,21 @@
 /**
  * 
  */
+class USTUAIPerceptionComponent;
 UCLASS()
 class SHOOTTHEMUP_API ASTUAIController : public AAIController
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
+
+    ASTUAIController();
+
+
 protected:
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+    USTUAIPerceptionComponent* STUAIPerceptionComponent;
+
     virtual void OnPossess(APawn* InPawn) override;
+    virtual void Tick(float Deltatime) override;
+    
+
 };

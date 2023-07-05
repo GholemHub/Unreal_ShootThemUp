@@ -3,3 +3,7 @@
 
 #include "AI/STUAICharacter.h"
 
+ASTUAICharacter::ASTUAICharacter(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+{
+    // Constructor implementation
+}

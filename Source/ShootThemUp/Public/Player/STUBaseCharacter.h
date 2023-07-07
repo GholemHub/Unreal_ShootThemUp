@@ -73,7 +73,7 @@ private:
     void OnStopRunning();
     void OnDeath();
     void OnHealthChanged(float Health, float HealthDelta);
-    
+    void OnStartFire();
 
     UFUNCTION(BlueprintCallable)
     void OnGroundLanded(const FHitResult& Hit);

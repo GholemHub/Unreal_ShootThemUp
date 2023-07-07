@@ -47,6 +47,7 @@ protected:
 private:
     UPROPERTY()
     UNiagaraComponent* MuzzleFXComponent;
+    AController* GetController() const;
 
     FTimerHandle ShotTimerHandle;
     void MakeDamage(const FHitResult& HitResult);

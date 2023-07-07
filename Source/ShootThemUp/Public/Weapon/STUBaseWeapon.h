@@ -44,12 +44,16 @@ public:
     void ChangeClip();
     bool CanReload() const;
 
+    bool IsFiring() const;
+
     FWeaponUIData GetUIData() const { return UIData; };
     FAmmoData GetAmmoUIData() const { return CurrentAmmo; };
 
     bool TryToAddAmmo(int32 ClipsAmount);
 
 protected:
+
+    bool FireInProgress = false;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component")
     USkeletalMeshComponent* WeaponMesh;

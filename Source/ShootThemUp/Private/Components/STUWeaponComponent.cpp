@@ -9,6 +9,8 @@
 
 DEFINE_LOG_CATEGORY_STATIC(LogWeaponComponent, All, All);
 
+constexpr static int32 WeaponNum = 2;
+
 // Sets default values for this component's properties
 USTUWeaponComponent::USTUWeaponComponent()
 {
@@ -110,6 +112,12 @@ void USTUWeaponComponent::StopFire()
         return;
     CurrentWeapon->StopFire();
 }
+
+bool USTUWeaponComponent::IsFiring() const
+{
+    return CurrentWeapon && CurrentWeapon->IsFiring();
+}
+
 
 void USTUWeaponComponent::NextWeapon() 
 {

@@ -75,8 +75,18 @@ void ASTUBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
     PlayerInputComponent->BindAction("Fire", IE_Released, WeaponComponent, &USTUWeaponComponent::StopFire);
     PlayerInputComponent->BindAction("NextWeapon", IE_Released, WeaponComponent, &USTUWeaponComponent::NextWeapon);
     PlayerInputComponent->BindAction("Reload", IE_Released, WeaponComponent, &USTUWeaponComponent::Reload);
+
+  
+    //PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ASTUBaseCharacter::OnStartFire);
 }
 
+
+void ASTUBaseCharacter::OnStartFire()
+{
+    if (IsRunning())
+        return;
+    WeaponComponent->StartFire();
+}
 
 bool ASTUBaseCharacter::IsRunning() const
 {

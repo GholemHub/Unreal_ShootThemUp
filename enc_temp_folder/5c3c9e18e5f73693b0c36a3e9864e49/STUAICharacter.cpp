@@ -18,6 +18,6 @@ void ASTUAICharacter::OnDeath()
 
     if (STUController && STUController->BrainComponent)
     {
-        STUController->BrainComponent->Cleanup();
+        //STUController->BrainComponent->Cleanup();
     }
 }

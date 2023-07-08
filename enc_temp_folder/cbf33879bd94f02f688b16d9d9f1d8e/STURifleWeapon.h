@@ -25,11 +25,11 @@ public:
 protected:
     virtual void MakeShot() override;
     ASTURifleWeapon();
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Damage")
     float DamageAmount = 10.0f;
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fire")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Fire")
     float TimeBetweenShots = 0.1f;
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fire")
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Fire")
     float BulletSpread = 1.5f;
     virtual bool GetTraceData(FVector&, FVector&) const override;
 

@@ -22,8 +22,6 @@ public:
     float RespawnTime = 5.0f;
 
 	ASTUBasePickup();
-    bool CouldBeTaken() const;
-
 
 protected:
 	// Called when the game starts or when spawned
@@ -36,7 +34,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
-    FTimerHandle RespawnTimerHandle;
+
 	float RotationYaw = 0.0f;
     virtual bool GivePickupTo(APawn* PlayerPawn);
     void PickUpWasTaken();

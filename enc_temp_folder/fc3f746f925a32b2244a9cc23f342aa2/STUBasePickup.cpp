@@ -19,12 +19,6 @@ ASTUBasePickup::ASTUBasePickup()
 
 }
 
-bool ASTUBasePickup::CouldBeTaken() const
-{
-    return !GetWorldTimerManager().IsTimerActive(RespawnTimerHandle);
-    
-}
-
 void ASTUBasePickup::NotifyActorBeginOverlap(AActor* OtherActor) 
 {
     Super::NotifyActorBeginOverlap(OtherActor);
@@ -66,7 +60,7 @@ void ASTUBasePickup::PickUpWasTaken()
     {
         GetRootComponent()->SetVisibility(false, true);
     }
-    
+    FTimerHandle RespawnTimerHandle;
     GetWorldTimerManager().SetTimer(RespawnTimerHandle, this, &ASTUBasePickup::Respawn, RespawnTime);
 }
 

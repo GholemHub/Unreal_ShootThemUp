@@ -39,7 +39,6 @@ public:
     bool GetCurrentWeaponAmmoUIData(FAmmoData& AmmoUIData) const;
 
     bool TryToAddAmmo(TSubclassOf<ASTUBaseWeapon> WeaponType, int32 ClipAmount);
-    bool NeedAmmo(TSubclassOf<ASTUBaseWeapon> WeaponType);
     ASTUBaseWeapon* GetCurrentWeapon() { return CurrentWeapon; }
 
 protected:

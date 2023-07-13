@@ -51,7 +51,6 @@ public:
 
     bool TryToAddAmmo(int32 ClipsAmount);
     bool IsAmmoEmpty() const;
-    bool IsAmmoFull() const;
 
 protected:
 
@@ -85,7 +84,7 @@ protected:
     void DecreaseAmmo();
     
     bool IsClipEmpty() const;
-    
+    bool IsAmmoFull() const;
     
     void LogAmmo();
 

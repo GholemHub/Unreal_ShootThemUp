@@ -128,7 +128,7 @@ void ASTUBaseWeapon::ChangeClip()
     {
         if (CurrentAmmo.Clips == 0)
         {
-            //UE_LOG(LogBaseWeapon, Warning, TEXT("No more clips"));
+            UE_LOG(LogBaseWeapon, Warning, TEXT("No more clips"));
             return;
         }
         CurrentAmmo.Clips--;

@@ -7,10 +7,7 @@
 
 ASTUAICharacter::ASTUAICharacter(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
-    AutoPossessAI = EAutoPossessAI::Disabled;
-    AIControllerClass = ASTUAIController::StaticClass();
-
-    bUseControllerRotationYaw = false;
+    // Constructor implementation
 }
 
 void ASTUAICharacter::OnDeath() 

@@ -157,16 +157,20 @@ bool ASTUBaseWeapon::IsAmmoFull() const
 
 bool ASTUBaseWeapon::TryToAddAmmo(int32 ClipsAmount)
 {
-    if (CurrentAmmo.Infinite || IsAmmoFull() || ClipsAmount <= 0)
-        return false;
+    UE_LOG(LogTemp, Error, TEXT("The Reload 123"));
+
+    /*if (CurrentAmmo.Infinite || IsAmmoFull() || ClipsAmount <= 0)
+        return false;*/
 
     if (IsAmmoEmpty())
     {
+        UE_LOG(LogTemp, Error, TEXT("The Reload 1"));
         CurrentAmmo.Clips = FMath::Clamp(ClipsAmount, 0, DefaultAmmo.Clips + 1);
         OnClipEmpty.Broadcast(this);
     }
     else if (CurrentAmmo.Clips < DefaultAmmo.Clips)
     {
+        UE_LOG(LogTemp, Error, TEXT("The Reload 2"));
         const auto NextClipsAmount = CurrentAmmo.Clips + ClipsAmount;
         if (DefaultAmmo.Clips - NextClipsAmount >= 0)
         {
@@ -180,6 +184,7 @@ bool ASTUBaseWeapon::TryToAddAmmo(int32 ClipsAmount)
     }
     else
     {
+        UE_LOG(LogTemp, Error, TEXT("The Reload 3 :: %i/%i"), CurrentAmmo.Clips, CurrentAmmo.Bullets);
         CurrentAmmo.Bullets = DefaultAmmo.Bullets;
     }
 

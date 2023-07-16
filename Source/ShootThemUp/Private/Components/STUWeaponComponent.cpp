@@ -5,6 +5,7 @@
 #include "Weapon/STUBaseWeapon.h"
 #include "GameFramework/Character.h"
 #include "Animations/STUEquipFinishedAnimNotify.h"
+#include "Develop/STUCoreTypes.h"
 #include "Animations/STUReloadFinishedAnimNotify.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogWeaponComponent, All, All);
@@ -50,7 +51,7 @@ void USTUWeaponComponent::SpawnWeapons()
 
     for (auto OneWeaponData : WeaponData)
     {
-        auto Weapon = GetWorld()->SpawnActor<ASTUBaseWeapon>(OneWeaponData.WeaponClasses); 
+        auto Weapon = GetWorld()->SpawnActor<ASTUBaseWeapon>(OneWeaponData.WeaponClass); 
         if (!Weapon)
             return;
         Weapon->SetOwner(Character);
@@ -90,7 +91,7 @@ void USTUWeaponComponent::EquipWeapon(int32 WeaponIndex)
     
     CurrentWeapon = Weapons[WeaponIndex];
     const auto CurrentWeaponData =
-        WeaponData.FindByPredicate([&](const FWeaponData& Data) { return Data.WeaponClasses == CurrentWeapon->GetClass(); });
+        WeaponData.FindByPredicate([&](const FWeaponData& Data) { return Data.WeaponClass == CurrentWeapon->GetClass(); });
 
     CurrentReloadAnimMontage = CurrentWeaponData ? CurrentWeaponData->ReloadAnimMontage : nullptr;
     AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponEquipSocketName);
@@ -240,12 +241,14 @@ bool USTUWeaponComponent::GetCurrentWeaponAmmoUIData(FAmmoData& AmmoData) const
 bool USTUWeaponComponent::TryToAddAmmo(TSubclassOf<ASTUBaseWeapon> WeaponType, int32 ClipAmount)
 {
         //UE_LOG(LogTemp, Error, TEXT("USTUWeaponComponent::TryToAddAmmo"));
-        for (const auto Weapon: Weapons)
+        for (const auto Weapon : Weapons)
         {
             if (Weapon && Weapon->IsA(WeaponType))
             {
+
                 return Weapon->TryToAddAmmo(ClipAmount);
             }
+            UE_LOG(LogTemp, Error, TEXT("USTUWeaponComponent::TryToAddAmmo"));
         }
 
         return false;

@@ -20,12 +20,12 @@ bool USTUHealthComponent::TryToHeal(float HealthPoint)
     if (Health != 0 && Health != MaxHealth)
     {
         SetHealth(Health + HealthPoint);
-        UE_LOG(LogHealthComponent, Error, TEXT("Added health"));   
+        //UE_LOG(LogHealthComponent, Error, TEXT("Added health"));   
         return true;
     }
     else
     {
-        UE_LOG(LogHealthComponent, Error, TEXT("Not Added health"));   
+       // UE_LOG(LogHealthComponent, Error, TEXT("Not Added health"));   
         return false;
     }
 }
@@ -80,7 +80,7 @@ void USTUHealthComponent::SetHealth(float NewHealth)
     const auto HealthDela = NextHealth - Health;
 
     Health = NextHealth;
-    UE_LOG(LogHealthComponent, Error, TEXT("HERE is %f"), Health);
+    //UE_LOG(LogHealthComponent, Error, TEXT("HERE is %f"), Health);
     OnHealthChanged.Broadcast(Health, HealthDela);
 }
 

@@ -25,6 +25,7 @@ public:
     virtual void StartPlay() override;
     virtual UClass* GetDefaultPawnClassForController_Implementation(AController* InController) override;
 
+    void RespawnRequest(AController* Controller);
 
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Game")
@@ -46,4 +47,6 @@ private:
 
     void ResetPlayers();
     void ResetOnePlayer(AController* Controller);
+
+    void StartRespawn(AController* Controller);
 };

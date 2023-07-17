@@ -68,6 +68,9 @@ struct FGameData
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game", meta = (ClampMin = "3", ClampMax = "300"))
     int32 RoundTime = 10; // in sec
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game", meta = (ClampMin = "3", ClampMax = "20"))
+    int32 RespawnTime = 5; // in sec
 };
 
 USTRUCT(BlueprintType)

@@ -7,6 +7,8 @@
 #include "UI/STUGameHUD.h"
 #include "Develop/STUCoreTypes.h"
 #include "AIController.h"
+#include "STUUtils.h"
+#include "Components/STURespawnComponent.h"
 
 ASTUGameModeBase::ASTUGameModeBase() 
 {
@@ -93,3 +95,16 @@ void ASTUGameModeBase::ResetOnePlayer(AController* Controller)
     }
     RestartPlayer(Controller);
 }
+
+void ASTUGameModeBase::StartRespawn(AController* Controller) 
+{
+    const auto RespawnComponent = STUUtils::GetSTUPlayerComponent<USTURespawnComponent>(Controller);
+    if (!RespawnComponent)
+        return;
+
+    RespawnComponent->Respawn(GameData.RespawnTime);
+}
+
+
+
+void ASTUGameModeBase::RespawnRequest(AController* Controller) {}

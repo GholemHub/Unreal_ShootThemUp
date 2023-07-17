@@ -159,8 +159,8 @@ bool ASTUBaseWeapon::TryToAddAmmo(int32 ClipsAmount)
 {
     UE_LOG(LogTemp, Error, TEXT("The Reload 123"));
 
-    if (CurrentAmmo.Infinite || IsAmmoFull() || ClipsAmount <= 0)
-        return false;
+    /*if (CurrentAmmo.Infinite || IsAmmoFull() || ClipsAmount <= 0)
+        return false;*/
 
     if (IsAmmoEmpty())
     {

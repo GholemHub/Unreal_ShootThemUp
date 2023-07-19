@@ -20,20 +20,6 @@ void ASTURifleWeapon::BeginPlay()
     check(WeaponFXComponent);
 }
 
-void ASTURifleWeapon::Tick(float DeltaSeconds) 
-{ 
-    Super::Tick(DeltaSeconds);
-
-    
-
-    FVector TraceStart, TraceEnd;
-    if (GetTraceData(TraceStart, TraceEnd))
-    {
-        FHitResult HitResult;
-        WhatActorSee(HitResult, TraceStart, TraceEnd);
-    }
-}
-
 void ASTURifleWeapon::StartFire()
 {
     Super::StartFire();

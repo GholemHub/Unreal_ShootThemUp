@@ -34,7 +34,6 @@ protected:
     virtual bool GetTraceData(FVector&, FVector&) const override;
 
     virtual void BeginPlay() override;
-    virtual void Tick(float DeltaSeconds) override;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "VFX")
     USTUWeaponFXComponent* WeaponFXComponent;

@@ -78,7 +78,6 @@ protected:
     virtual bool GetTraceData(FVector&, FVector&) const;
 
     void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd);
-    void WhatActorSee(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd);
     APlayerController* GetPlayerController() const;
     bool GetPlayerViewPoint(FVector&, FRotator&)const;
     FVector GetMuzzleWorldLocation() const;

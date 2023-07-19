@@ -10,7 +10,7 @@ DEFINE_LOG_CATEGORY_STATIC(LogBaseWeapon, All, All);
 
 ASTUBaseWeapon::ASTUBaseWeapon()
 {
-    PrimaryActorTick.bCanEverTick = true;
+    PrimaryActorTick.bCanEverTick = false;
 
     WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>("WeaponMesh");
     SetRootComponent(WeaponMesh);
@@ -94,25 +94,6 @@ void ASTUBaseWeapon::MakeHit(FHitResult& HitResult, const FVector& TraceStart, c
     CollisionParams.AddIgnoredActor(GetOwner());
 
     GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility, CollisionParams);
-}
-
-void ASTUBaseWeapon::WhatActorSee(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd)
-{
-    if (!GetWorld())
-        return;
-
-    FCollisionQueryParams CollisionParams;
-    CollisionParams.bReturnPhysicalMaterial = true;
-    CollisionParams.AddIgnoredActor(GetOwner());
-
-    GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility, CollisionParams);
-
-    if (HitResult.bBlockingHit)
-    {
-        UE_LOG(LogTemp, Error, TEXT("SEE"));
-        DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.f, 24, FColor::Red, false, 5.0f);
-    }
-
 }
 
 void ASTUBaseWeapon::DecreaseAmmo()

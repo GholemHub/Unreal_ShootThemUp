@@ -84,8 +84,9 @@ protected:
     FVector GetMuzzleWorldLocation() const;
 
     void DecreaseAmmo();
-    
     bool IsClipEmpty() const;
+
+ 
     
     
     void LogAmmo();
@@ -94,4 +95,7 @@ protected:
 
 private:
     FAmmoData CurrentAmmo;
+
+    UPROPERTY()
+    UPrimitiveComponent* MeshComponent;
 };

@@ -5,6 +5,9 @@
 #include "GameFramework/Controller.h"
 #include "NiagaraFunctionLibrary.h"
 #include "NiagaraComponent.h"
+#include "Components/MeshComponent.h"
+#include "Player/STUBaseCharacter.h"
+#include "AI/STUAICharacter.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogBaseWeapon, All, All);
 
@@ -101,19 +104,50 @@ void ASTUBaseWeapon::WhatActorSee(FHitResult& HitResult, const FVector& TraceSta
     if (!GetWorld())
         return;
 
-    FCollisionQueryParams CollisionParams;
-    CollisionParams.bReturnPhysicalMaterial = true;
-    CollisionParams.AddIgnoredActor(GetOwner());
+    FCollisionQueryParams CollisionParam;
+    GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility, CollisionParam);
 
-    GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility, CollisionParams);
 
-    if (HitResult.bBlockingHit)
+    // Reset the custom depth rendering for the previous object, if any
+    if (MeshComponent)
     {
-        UE_LOG(LogTemp, Error, TEXT("SEE"));
-        DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.f, 24, FColor::Red, false, 5.0f);
+        MeshComponent->SetRenderCustomDepth(false);
     }
 
+    // If the ray hits an object, check its type and update the custom depth rendering accordingly
+    if (HitResult.bBlockingHit)
+    {
+        
+        const auto CurrentActor = HitResult.GetActor();
+        if (CurrentActor)
+        {
+            
+            if (CurrentActor->IsA<ASTUBaseCharacter>()) // Replace ABaseBoxActor with the actual class name for your box
+            {
+                // Set the custom depth to true to change the object's rendering color to green
+                UMeshComponent* CurrentMeshComponent = Cast<UMeshComponent>(HitResult.GetComponent());
+                if (CurrentMeshComponent)
+                {
+                    CurrentMeshComponent->SetRenderCustomDepth(true);
+                    CurrentMeshComponent->SetCustomDepthStencilValue(1);
+                    MeshComponent = CurrentMeshComponent; // Save the current mesh component for future resets
+                }
+            }
+            else  // Replace ABaseSphereActor with the actual class name for your sphere
+            {
+                // Set the custom depth to true to change the object's rendering color to red
+                UMeshComponent* CurrentMeshComponent = Cast<UMeshComponent>(HitResult.GetComponent());
+                if (CurrentMeshComponent)
+                {
+                    CurrentMeshComponent->SetRenderCustomDepth(true);
+                    CurrentMeshComponent->SetCustomDepthStencilValue(2);
+                    MeshComponent = CurrentMeshComponent; // Save the current mesh component for future resets
+                }
+            }
+        }
+    }
 }
+
 
 void ASTUBaseWeapon::DecreaseAmmo()
 {
@@ -140,6 +174,7 @@ bool ASTUBaseWeapon::IsClipEmpty() const
 {
     return CurrentAmmo.Bullets == 0;
 }
+
 
 void ASTUBaseWeapon::ChangeClip()
 {

@@ -48,6 +48,9 @@ void USTUHealthComponent::BeginPlay()
 void USTUHealthComponent::OnTakeAnyDamage(
     AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
+
+    DamageOutline(DamagedActor);
+
     if (Damage <= 0.0f || IsDead() || !GetWorld()) return;
     SetHealth(Health - Damage);
 
@@ -74,6 +77,19 @@ void USTUHealthComponent::HealUpdate() {
 
 }
 
+void USTUHealthComponent::OutlineUpdate() 
+{
+    AActor* ComponentOwner = GetOwner();
+    ComponentOwner->FindComponentByClass<UMeshComponent>();
+
+    const auto Actor = ComponentOwner->FindComponentByClass<UMeshComponent>();
+
+    Actor->SetRenderCustomDepth(false);
+
+    GetWorld()->GetTimerManager().ClearTimer(OutlineTimerHandle);
+    
+}
+
 void USTUHealthComponent::SetHealth(float NewHealth)
 {
     const auto NextHealth = FMath::Clamp(NewHealth, 0.0f, MaxHealth);
@@ -95,4 +111,15 @@ void USTUHealthComponent::PlayCameraShake()
     if (!Controller || !Controller->PlayerCameraManager)
         return; 
     Controller->PlayerCameraManager->StartCameraShake(CameraShake);
+}
+
+void USTUHealthComponent::DamageOutline(AActor* DamagedActor)
+{
+    if (const auto Actor = DamagedActor->FindComponentByClass<UMeshComponent>())
+    {
+        Actor->SetRenderCustomDepth(true);
+        Actor->SetCustomDepthStencilValue(1);
+
+        GetWorld()->GetTimerManager().SetTimer(OutlineTimerHandle, this, &USTUHealthComponent::OutlineUpdate, 0.3f, true);
+    }
 }

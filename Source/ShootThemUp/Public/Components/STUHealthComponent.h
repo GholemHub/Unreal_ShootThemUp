@@ -53,6 +53,7 @@ protected:
 private:
    
     FTimerHandle HealTimerHandle;
+    FTimerHandle OutlineTimerHandle;
     float Health = 0.0f;
 
         UFUNCTION(BlueprintCallable, Category = "Health")
@@ -60,8 +61,10 @@ private:
         AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
 
     void HealUpdate();
+    void OutlineUpdate();
     void SetHealth(float NewHealth);
     void PlayCameraShake();
 
+    void DamageOutline(AActor* DamagedActor);
 
 };

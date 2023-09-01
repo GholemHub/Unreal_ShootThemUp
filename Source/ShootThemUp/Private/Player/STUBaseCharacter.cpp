@@ -12,6 +12,8 @@
 #include "Logging/LogMacros.h"
 #include "Components/STUWeaponComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Placement/STU_PlacementActorComponent.h"
+#include "Placement/STU_PlaceActorComponent.h"
 
 DEFINE_LOG_CATEGORY_STATIC(BaseCharacterLog, All, All);
 
@@ -32,6 +34,10 @@ ASTUBaseCharacter::ASTUBaseCharacter(const FObjectInitializer& ObjInit)
     TestRender->SetupAttachment(GetRootComponent());
 
     WeaponComponent = CreateDefaultSubobject<USTUWeaponComponent>("WeaponComponent");
+    PlacementComponent = CreateDefaultSubobject<USTU_PlacementActorComponent>("PlacementComponent");
+    PlaceActorComponent = CreateDefaultSubobject<USTU_PlaceActorComponent>("PlaceActorComponent");
+
+
 }
 
 // Called when the game starts or when spawned
@@ -76,10 +82,20 @@ void ASTUBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
     PlayerInputComponent->BindAction("NextWeapon", IE_Released, WeaponComponent, &USTUWeaponComponent::NextWeapon);
     PlayerInputComponent->BindAction("Reload", IE_Released, WeaponComponent, &USTUWeaponComponent::Reload);
 
-  
-    //PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ASTUBaseCharacter::OnStartFire);
+    PlayerInputComponent->BindAction("Placement", IE_Pressed, this, &ASTUBaseCharacter::OnPlacementPressed);
 }
 
+void ASTUBaseCharacter::OnPlacementPressed()
+{
+    if (PlaceActorComponent)
+    {
+        PlaceActorComponent->ChangeBuild();
+        PlaceActorComponent->SetMyBoolVariable(bIsBuilding);
+        bIsBuilding = !bIsBuilding;
+
+        UE_LOG(LogTemp, Error, TEXT("Here!"))
+    }
+}
 
 void ASTUBaseCharacter::OnStartFire()
 {
@@ -90,6 +106,7 @@ void ASTUBaseCharacter::OnStartFire()
 
 bool ASTUBaseCharacter::IsRunning() const
 {
+    
     return WantsToRun && IsMovingForward && !GetVelocity().IsZero();
 }
 
@@ -105,6 +122,7 @@ float ASTUBaseCharacter::GetMovementDirection() const
 
 void ASTUBaseCharacter::MoveForward(float Amount) 
 {
+    //PlaceActorComponent->SetMyBoolVariable(true);
     IsMovingForward = Amount > 0.0f;
     AddMovementInput(GetActorForwardVector(), Amount);
 }

@@ -26,6 +26,8 @@ public:
     virtual UClass* GetDefaultPawnClassForController_Implementation(AController* InController) override;
 
     void RespawnRequest(AController* Controller);
+    UPROPERTY(EditAnywhere)
+    bool InBuilding = true;
 
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Game")
@@ -35,12 +37,14 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, Category = "Game")
     FGameData GameData;
+    
 
 private:
     void SpawnBots();
     void StartRound();
     void GameTimerUpdate();
 
+    
     int32 CurrentRound = 1;
     int32 RoundCountDown = 0;
     FTimerHandle GameRoundTimerHandle;

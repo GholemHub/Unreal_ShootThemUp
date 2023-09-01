@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Placement/STU_PlacementActorComponent.h"
 #include "STUBaseCharacter.generated.h"
+
 
 //DECLARE_LOG_CATEGORY_EXTERN(BaseCharacterLog, All, All)
 
@@ -13,6 +15,8 @@ class USpringArmComponent;
 class USTUHealthComponent;
 class UTextRenderComponent;
 class USTUWeaponComponent;
+class USTU_PlacementActorComponent;
+class USTU_PlaceActorComponent;
 
 UCLASS()
 class SHOOTTHEMUP_API ASTUBaseCharacter : public ACharacter
@@ -47,6 +51,12 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     USTUWeaponComponent* WeaponComponent;
 
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    USTU_PlacementActorComponent* PlacementComponent;
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    USTU_PlaceActorComponent* PlaceActorComponent;
+    
+
     virtual void OnDeath();
   
 
@@ -74,8 +84,10 @@ private:
     void OnStopRunning();
     void OnHealthChanged(float Health, float HealthDelta);
     void OnStartFire();
-
+    void OnPlacementPressed();
     UFUNCTION(BlueprintCallable)
     void OnGroundLanded(const FHitResult& Hit);
+
+    bool bIsBuilding = true;
 
 };

@@ -27,10 +27,7 @@ void USTU_PlaceActorComponent::BeginPlay()
 	Super::BeginPlay();
     if (bBuildMode)
     {
-        FVector Location(0.0f, 0.0f, 0.0f);
-        FRotator Rotation(0.0f, 0.0f, 0.0f);
-        SpawnedActor = GetWorld()->SpawnActor<AActor>(ActorToSpawn, Location, Rotation);
-        
+        SpawnActor();
     }
 }
 
@@ -39,23 +36,17 @@ bool bBuildMode_Local = true;
 void USTU_PlaceActorComponent::SetMyBoolVariable(bool NewValue)
 {
     bBuildMode = NewValue;
-    //UE_LOG(LogTemp, Warning, TEXT("MyBoolVariable has been set to111: %s"), bBuildMode ? TEXT("True") : TEXT("False"));
     bBuildMode_Local = bBuildMode;
-
-    
-    
 }
 
 // Called every frame
 void USTU_PlaceActorComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
      Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-    
-     //UE_LOG(LogTemp, Warning, TEXT("MyBoolVariable2 has been set to: %s"), bBuildMode_Local ? TEXT("True") : TEXT("False"));
-    
+
      if (bBuildMode_Local == true)
      {
-         // UE_LOG(LogTemp, Warning, TEXT("IsBuilding2 :: %i"), IsBuilding)v
+     
          APlayerCameraManager* CamManager = GetWorld()->GetFirstPlayerController()->PlayerCameraManager;
          FVector CamLocation = CamManager->GetCameraLocation();
          FVector CamForward = CamManager->GetCameraRotation().Vector();
@@ -74,29 +65,9 @@ void USTU_PlaceActorComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
              // Move the spawned actor to the calculated spawn location
              if (SpawnedActor)
              {
-                 FName ComponentName = FName(TEXT("STU_PlacementActor"));
-                 TArray<UActorComponent*> ActorComponents;
-                 if (SpawnedActor)
-                 {
-                     SpawnedActor->GetComponents(ActorComponents);
-
-                     for (UActorComponent* Component : ActorComponents)
-                     {
-                         if (Component->GetFName() == ComponentName)
-                         {
-                             // You have found the component, you can now work with it.
-                             USTU_PlacementActorComponent* PlacementComponent = Cast<USTU_PlacementActorComponent>(Component);
-                             if (PlacementComponent)
-                             {
-                                 // Assuming MaterialToApply is a reference to the material you want to apply
-                                 DefaultMaterial = PlacementComponent->DefaultMaterial;
-                                 BlankMaterial = PlacementComponent->BlankMaterial;
-                             }
-                             break; // Exit the loop once you find the component.
-                         }
-                     }
-                 }
-                SpawnedActor->SetActorLocation(SpawnLocation);
+                SetupMaterials();
+                //SpawnedActor->SetActorLocation(SpawnLocation);
+                SnapToGrid(100);
                 UStaticMeshComponent* MeshComponent = SpawnedActor->FindComponentByClass<UStaticMeshComponent>();
 
                 if (MeshComponent)
@@ -110,42 +81,83 @@ void USTU_PlaceActorComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
      {
          if (SpawnedActor)
          {
-             FName ComponentName = FName(TEXT("STU_PlacementActor"));
-             TArray<UActorComponent*> ActorComponents;
-             if (SpawnedActor)
-             {
-                SpawnedActor->GetComponents(ActorComponents);
-
-                for (UActorComponent* Component : ActorComponents)
-                {
-                    if (Component->GetFName() == ComponentName)
-                    {
-                        // You have found the component, you can now work with it.
-                        USTU_PlacementActorComponent* PlacementComponent = Cast<USTU_PlacementActorComponent>(Component);
-                        if (PlacementComponent)
-                        {
-                            // Assuming MaterialToApply is a reference to the material you want to apply
-                            DefaultMaterial = PlacementComponent->DefaultMaterial;
-                            BlankMaterial = PlacementComponent->BlankMaterial;
-                        }
-                        break; // Exit the loop once you find the component.
-                    }
-                }
-             }
+            SetupMaterials();
             UStaticMeshComponent* MeshComponent = SpawnedActor->FindComponentByClass<UStaticMeshComponent>();
 
             if (MeshComponent)
             {  
                 MeshComponent->SetMaterial(0, DefaultMaterial); // 0 is the index of the material slot to change
             }
-            
+            SpawnActor();
          }
+
      }
      
+}
+
+void USTU_PlaceActorComponent::SnapToGrid(float GridSize)
+{
+     APlayerCameraManager* CamManager = GetWorld()->GetFirstPlayerController()->PlayerCameraManager;
+     FVector CamLocation = CamManager->GetCameraLocation();
+     FVector CamForward = CamManager->GetCameraRotation().Vector();
+     FHitResult HitResult;
+     float DistanceToHit = FVector::Dist(CamLocation, HitResult.Location);
+     // Calculate the spawn location of the actor in front of the camera
+     FVector SpawnLocation = CamLocation + (CamForward * (DistanceToHit));
+
+     FVector CurrentLocation = SpawnLocation;
+
+     // Snap the X, Y, and Z components to the nearest grid points
+     float SnappedX = FMath::RoundToFloat(CurrentLocation.X / GridSize) * GridSize;
+     float SnappedY = FMath::RoundToFloat(CurrentLocation.Y / GridSize) * GridSize;
+     float SnappedZ = FMath::RoundToFloat(CurrentLocation.Z / GridSize) * GridSize;
+
+     // Create a new FVector with the snapped values
+     FVector SnappedLocation(SnappedX, SnappedY, SnappedZ);
+
+     // Set the actor's new location
+     if (SpawnedActor)
+     {
+         SpawnedActor->SetActorLocation(SnappedLocation);
+     }
 }
 
 void USTU_PlaceActorComponent::OnMyActionPressed()
 {
      // This function will be called when the bound key is pressed
      // Implement your desired behavior here
+}
+
+void USTU_PlaceActorComponent::SetupMaterials() 
+{
+     FName ComponentName = FName(TEXT("STU_PlacementActor"));
+     TArray<UActorComponent*> ActorComponents;
+     if (SpawnedActor)
+     {
+         SpawnedActor->GetComponents(ActorComponents);
+
+         for (UActorComponent* Component : ActorComponents)
+         {
+            if (Component->GetFName() == ComponentName)
+            {
+                // You have found the component, you can now work with it.
+                USTU_PlacementActorComponent* PlacementComponent = Cast<USTU_PlacementActorComponent>(Component);
+                if (PlacementComponent)
+                {
+                    // Assuming MaterialToApply is a reference to the material you want to apply
+                    DefaultMaterial = PlacementComponent->DefaultMaterial;
+                    BlankMaterial = PlacementComponent->BlankMaterial;
+                }
+                break; // Exit the loop once you find the component.
+            }
+         }
+     }
+}
+
+void USTU_PlaceActorComponent::SpawnActor() 
+{
+
+     FVector Location(0.0f, 0.0f, 0.0f);
+     FRotator Rotation(0.0f, 0.0f, 0.0f);
+     SpawnedActor = GetWorld()->SpawnActor<AActor>(ActorToSpawn, Location, Rotation);
 }

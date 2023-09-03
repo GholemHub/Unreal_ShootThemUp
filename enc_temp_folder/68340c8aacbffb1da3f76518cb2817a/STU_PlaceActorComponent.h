@@ -45,7 +45,5 @@ private:
     FVector TraceEnd = FVector(0,0,0);
 	AActor* SpawnedActor = nullptr;
     void OnMyActionPressed();
-    void SetupMaterials();
-    void SpawnActor();
-    void SnapToGrid(float GridSize);
+
 };

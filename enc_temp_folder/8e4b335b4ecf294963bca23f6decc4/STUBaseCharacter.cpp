@@ -130,7 +130,7 @@ void ASTUBaseCharacter::SetPlayerColor(const FLinearColor& Color)
 
 void ASTUBaseCharacter::MoveForward(float Amount) 
 {
-    
+    //PlaceActorComponent->SetMyBoolVariable(true);
     IsMovingForward = Amount > 0.0f;
     AddMovementInput(GetActorForwardVector(), Amount);
 }

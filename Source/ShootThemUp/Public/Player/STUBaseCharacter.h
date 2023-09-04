@@ -56,6 +56,8 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     USTU_PlaceActorComponent* PlaceActorComponent;
     
+    UPROPERTY(EditDefaultsOnly, Category = "Movement")
+    FName MaterialColorName = "Paint Color";
 
     virtual void OnDeath();
   
@@ -72,7 +74,7 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Movement")
 		float GetMovementDirection() const;
 
-
+    void SetPlayerColor(const FLinearColor& Color);
 
 private:
     bool WantsToRun = false;

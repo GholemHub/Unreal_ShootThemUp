@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "Player/STUPlayerController.h"
+
 #include "AIController.h"
 #include "Develop/STUCoreTypes.h"
 #include "STUGameModeBase.generated.h"
@@ -53,4 +54,8 @@ private:
     void ResetOnePlayer(AController* Controller);
 
     void StartRespawn(AController* Controller);
+
+    void CreateTeamsInfo();
+    FLinearColor DetermineColorByTeamID(int32 TeamID) const;
+    void SetPlayerColor(AController* Controller);
 };

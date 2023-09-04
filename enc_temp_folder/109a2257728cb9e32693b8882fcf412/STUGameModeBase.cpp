@@ -22,11 +22,9 @@ ASTUGameModeBase::ASTUGameModeBase()
 void ASTUGameModeBase::StartPlay() 
 {
     Super::StartPlay();
-    
+    CreateTeamsInfo();
     SpawnBots();
     CurrentRound = 1;
-
-    CreateTeamsInfo();
     StartRound();
 }
 

@@ -1,5 +1,5 @@
 #pragma once
-//#include "Player/STUPlayerState.h"
+#include "Player/STUPlayerState.h"
 
 class STUUtils
 {
@@ -14,4 +14,11 @@ public:
     }
 
     static FText TextFromInt(int32 Number) { return FText::FromString(FString::FromInt(Number)); }
+
+  /*  bool static AreEnemis(AController* Controller1, AController* Controller2) { 
+        if (!Controller1 || !Controller2 || Controller1 == Controller2)
+            return false;
+        const auto PlayerState1 = Cast<ASTUPlayerState>
+
+    }*/
 };

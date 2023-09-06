@@ -32,6 +32,8 @@ public:
 
     void Killed(AController* KillerController, AController* VictimController);
 
+    int32 GetRoundCountDown() { return RoundCountDown; }
+
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Game")
     TSubclassOf<AAIController> AIControllerClass;

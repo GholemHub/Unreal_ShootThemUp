@@ -4,9 +4,6 @@
 #include "UI/STUPlayerHUDWidget.h"
 #include "Components/STUHealthComponent.h"
 #include "Components/STUWeaponComponent.h"
-#include "Player/STU_PlayerState.h"
-#include "STUGameModeBase.h"
-
 #include "STUUtils.h"
 
 float USTUPlayerHUDWidget::GetHealthPervent() const
@@ -46,43 +43,6 @@ bool USTUPlayerHUDWidget::GetCurrentWeaponUIAmmoData(FAmmoData& AmmoUIData) cons
 
     return WeaponComponent->GetCurrentWeaponAmmoUIData(AmmoUIData);
 }
-
-int32 USTUPlayerHUDWidget::GetKillsUIAmmoData() const
-{
-    const auto Player = GetOwningPlayerPawn();
-    if (!Player)
-        return 0;
-
-   const auto PlayerController = Player->GetController();
-    if (!PlayerController)
-        return 0;
-   const auto PlayerState = Cast<ASTU_PlayerState>(PlayerController->PlayerState);
-  
-   return PlayerState->GetKillsNum();
-}
-
-int32 USTUPlayerHUDWidget::GetDeathUIAmmoData() const
-{
-   const auto Player = GetOwningPlayerPawn();
-   if (!Player)
-        return 0;
-
-   const auto PlayerController = Player->GetController();
-   if (!PlayerController)
-        return 0;
-   const auto PlayerState = Cast<ASTU_PlayerState>(PlayerController->PlayerState);
-
-   return PlayerState->GetDeathNum();
-}
-
-float USTUPlayerHUDWidget::GetRoundTimerUIAmmoData() const
-{
-   const auto GameMode = Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode());
-   
-
-   return GameMode->GetRoundCountDown();
-}
-
 
 bool USTUPlayerHUDWidget::IsPlayerAlive() const
 {

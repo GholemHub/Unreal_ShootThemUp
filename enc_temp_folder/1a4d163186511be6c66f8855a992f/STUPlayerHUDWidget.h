@@ -27,15 +27,6 @@ public:
     bool GetCurrentWeaponUIAmmoData(FAmmoData& AmmoUIData) const;
 
     UFUNCTION(BlueprintCallable, Category = "UI")
-    int32 GetKillsUIAmmoData() const;
-
-    UFUNCTION(BlueprintCallable, Category = "UI")
-    int32 GetDeathUIAmmoData() const;
-
-    UFUNCTION(BlueprintCallable, Category = "UI")
-    float GetRoundTimerUIAmmoData() const;
-
-    UFUNCTION(BlueprintCallable, Category = "UI")
     bool IsPlayerAlive() const;
     UFUNCTION(BlueprintCallable, Category = "UI")
     bool IsPlayerSpectating() const;

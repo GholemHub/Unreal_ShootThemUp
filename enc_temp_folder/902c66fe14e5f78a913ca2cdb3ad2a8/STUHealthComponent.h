@@ -67,6 +67,4 @@ private:
 
     void DamageOutline(AActor* DamagedActor);
 
-    void Killed(AController* KillerController);
-
 };

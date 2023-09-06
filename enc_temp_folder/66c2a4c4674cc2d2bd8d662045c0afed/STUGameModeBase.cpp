@@ -77,8 +77,6 @@ void ASTUGameModeBase::GameTimerUpdate()
         else
         {
             UE_LOG(LogTemp, Display, TEXT("Game over"));
-            LogPlayerInfo();
-            UE_LOG(LogTemp, Display, TEXT("Game over"));
         }
     }
 }
@@ -166,43 +164,61 @@ void ASTUGameModeBase::SetPlayerColor(AController* Controller)
     Character->SetPlayerColor(PlayerState->GetTeamColor());
 }
 
+/// </summary>
+
+//void ASTUGameModeBase::CreateTeamsInfo() 
+//{
+//
+//    UE_LOG(LogTemp, Warning, TEXT("The material"));
+//    if (!GetWorld())
+//        return;
+//    int32 TeamID = 1;
+//    for (auto It = GetWorld()->GetControllerIterator(); It; ++It)
+//    {
+//        UE_LOG(LogTemp, Warning, TEXT("The material2"));
+//        const auto Controller = It->Get();
+//        if (!Controller)
+//            continue;
+//        const auto PlayerState = Cast<ASTU_PlayerState>(Controller->PlayerState);
+//        if (!PlayerState)
+//            continue;
+//        PlayerState->SetTeamID(TeamID);
+//        PlayerState->SetTeamColor(DetermineColorByTeamID(TeamID));
+//        SetPlayerColor(Controller);
+//        TeamID = TeamID == 1 ? 2 : 1;
+//    }
+//}
+
+//FLinearColor ASTUGameModeBase::DetermineColorByTeamID(int32 TeamID) const
+//{
+//    if (TeamID - 1 < GameData.TeamColors.Num())
+//    {
+//        UE_LOG(LogTemp, Warning, TEXT("The material3"));
+//        return GameData.TeamColors[TeamID - 1];
+//    }
+//    UE_LOG(LogTemp, Warning, TEXT("No Color for team id: %i, set to default: %s"), TeamID, *GameData.DefaultTeamColor.ToString());
+//    return GameData.DefaultTeamColor;
+//}
+
+//void ASTUGameModeBase::SetPlayerColor(AController* Controller) 
+//{
+//    if (!Controller)
+//        return;
+//    const auto Character = Cast<ASTUBaseCharacter>(Controller->GetPawn());
+//    if (!Controller)
+//        return;
+//
+//    const auto PlayerState = Cast<ASTU_PlayerState>(Controller->PlayerState);
+//
+//    if (!PlayerState)
+//        return;
+//    UE_LOG(LogTemp, Warning, TEXT("The material4"));
+//    Character->SetPlayerColor(PlayerState->GetTeamColor());
+//}
+
+
 
 void ASTUGameModeBase::RespawnRequest(AController* Controller) 
 {
 
-}
-
-void ASTUGameModeBase::Killed(AController* KillerController, AController* VictimController) 
-{
-    const auto KillerPkayerState = KillerController ? Cast<ASTU_PlayerState>(KillerController->PlayerState) : nullptr;
-    const auto VictimkPlayerState = VictimController ? Cast<ASTU_PlayerState>(VictimController->PlayerState) : nullptr;
-
-    if (KillerPkayerState)
-    {
-        KillerPkayerState->AddKill();
-    }
-
-    if (VictimkPlayerState)
-    {
-        VictimkPlayerState->AddDeath();
-    }
-}
-
-void ASTUGameModeBase::LogPlayerInfo()
-{
-    if (!GetWorld())
-        return;
-
-    for (auto It = GetWorld()->GetControllerIterator(); It; ++It)
-    {
-        const auto Controller = It->Get();
-        if (!Controller)
-            continue;
-
-        const auto PlayerState = Cast<ASTU_PlayerState>(Controller->PlayerState);
-        if (!PlayerState)
-            continue;
-
-        PlayerState->LogInfo();
-    }
 }

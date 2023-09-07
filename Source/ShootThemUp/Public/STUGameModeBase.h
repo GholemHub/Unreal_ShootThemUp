@@ -33,6 +33,7 @@ public:
     void Killed(AController* KillerController, AController* VictimController);
 
     int32 GetRoundCountDown() { return RoundCountDown; }
+    FString GetRoundData() { return FString::Printf(TEXT("%i/%i"), CurrentRound, GameData.RoundsNum); }
 
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Game")
@@ -52,13 +53,15 @@ private:
     
     int32 CurrentRound = 1;
     int32 RoundCountDown = 0;
+    int32 RespawnCountDown = 0;
     FTimerHandle GameRoundTimerHandle;
+    FTimerHandle RespawnTimerHandle;
 
     void ResetPlayers();
     void ResetOnePlayer(AController* Controller);
 
     void StartRespawn(AController* Controller);
-
+    void RespawnTimerUpdate();
     void CreateTeamsInfo();
     FLinearColor DetermineColorByTeamID(int32 TeamID) const;
     void SetPlayerColor(AController* Controller);

@@ -2,14 +2,15 @@
 
 
 #include "Components/STURespawnComponent.h"
-#include "STUGameModeBase.h"
 
 // Sets default values for this component's properties
 USTURespawnComponent::USTURespawnComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-    PrimaryComponentTick.bCanEverTick = false;
+	PrimaryComponentTick.bCanEverTick = false;
+	
+
 }
 
 void USTURespawnComponent::Respawn(int32 RespawnTime) 
@@ -27,11 +28,11 @@ void USTURespawnComponent::RespawnTimerUpdate()
             return;
         GetWorld()->GetTimerManager().ClearTimer(RespawnTimerHandle);
 
-        const auto GameMode = Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode());
+            /*const auto GameMode = Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode());
 
         if (!GameMode)
             return;
-        GameMode->RespawnRequest(Cast<AController>(GetOwner()));
+        GameMode->RespawnRequest(Cast<AController>(GetOwner()));*/
     }
 }
 

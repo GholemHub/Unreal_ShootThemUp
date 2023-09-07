@@ -111,8 +111,21 @@ void ASTUGameModeBase::StartRespawn(AController* Controller)
 
     RespawnComponent->Respawn(GameData.RespawnTime);
 }
+void ASTUGameModeBase::RespawnTimerUpdate() 
+{
+    if (--RespawnCountDown == 0)
+    {
+    
+    if (!GetWorld())
+            return;
+    GetWorld()->GetTimerManager().ClearTimer(RespawnTimerHandle);
 
-/// <summary>
+    const auto GameMode = Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode());
+    if (!GameMode)
+            return;
+    GameMode->RespawnRequest(Cast<AController>(GetOwner()));
+    }
+}
 void ASTUGameModeBase::CreateTeamsInfo()
 {
     if (!GetWorld())
@@ -169,7 +182,7 @@ void ASTUGameModeBase::SetPlayerColor(AController* Controller)
 
 void ASTUGameModeBase::RespawnRequest(AController* Controller) 
 {
-
+    ResetOnePlayer(Controller);
 }
 
 void ASTUGameModeBase::Killed(AController* KillerController, AController* VictimController) 
@@ -186,6 +199,7 @@ void ASTUGameModeBase::Killed(AController* KillerController, AController* Victim
     {
         VictimkPlayerState->AddDeath();
     }
+    StartRespawn(VictimController);
 }
 
 void ASTUGameModeBase::LogPlayerInfo()

@@ -61,18 +61,15 @@ int32 USTUPlayerHUDWidget::GetKillsUIAmmoData() const
    return PlayerState->GetKillsNum();
 }
 
-int32 USTUPlayerHUDWidget::GetDeathUIAmmoData() const
+FString USTUPlayerHUDWidget::GetRoundUIData() const
 {
    const auto Player = GetOwningPlayerPawn();
    if (!Player)
-        return 0;
+        return "";
 
-   const auto PlayerController = Player->GetController();
-   if (!PlayerController)
-        return 0;
-   const auto PlayerState = Cast<ASTU_PlayerState>(PlayerController->PlayerState);
+   const auto GameMode = Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode());
 
-   return PlayerState->GetDeathNum();
+   return GameMode->GetRoundData();
 }
 
 float USTUPlayerHUDWidget::GetRoundTimerUIAmmoData() const

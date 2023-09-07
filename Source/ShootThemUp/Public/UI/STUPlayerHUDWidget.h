@@ -30,7 +30,7 @@ public:
     int32 GetKillsUIAmmoData() const;
 
     UFUNCTION(BlueprintCallable, Category = "UI")
-    int32 GetDeathUIAmmoData() const;
+    FString GetRoundUIData() const;
 
     UFUNCTION(BlueprintCallable, Category = "UI")
     float GetRoundTimerUIAmmoData() const;

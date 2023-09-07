@@ -16,7 +16,6 @@ public:
 	// Sets default values for this component's properties
 	USTURespawnComponent();
     void Respawn(int32 RespawnTime);
-    int32 GetRespawnCountDown() const { return RespawnCountDown; }
 
 private:
     FTimerHandle RespawnTimerHandle;

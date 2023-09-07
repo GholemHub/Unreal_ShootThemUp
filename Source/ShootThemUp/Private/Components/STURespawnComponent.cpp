@@ -16,6 +16,7 @@ void USTURespawnComponent::Respawn(int32 RespawnTime)
 {
     if (!GetWorld())
         return;
+    RespawnCountDown = RespawnTime;
     GetWorld()->GetTimerManager().SetTimer(RespawnTimerHandle, this, &USTURespawnComponent::RespawnTimerUpdate, 1.0f, true);
 }
 

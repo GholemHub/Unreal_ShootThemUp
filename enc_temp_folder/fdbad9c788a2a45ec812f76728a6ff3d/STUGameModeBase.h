@@ -67,5 +67,4 @@ private:
     void SetPlayerColor(AController* Controller);
 
     void LogPlayerInfo();
-    void GameOver();
 };

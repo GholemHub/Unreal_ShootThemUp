@@ -16,6 +16,7 @@ class SHOOTTHEMUP_API ASTUPlayerController : public APlayerController
 	GENERATED_BODY()
 public:
     ASTUPlayerController();
+    virtual void OnPossess(APawn* InPawn) override;
 
 protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")

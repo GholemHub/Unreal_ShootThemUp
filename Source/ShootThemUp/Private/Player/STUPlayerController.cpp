@@ -1,8 +1,6 @@
-// Shoot Them Up Game, All Rights Receved
-
-
-#include "Components/STURespawnComponent.h"
 #include "Player/STUPlayerController.h"
+#include "Components/STURespawnComponent.h"
+
 
 ASTUPlayerController::ASTUPlayerController() 
 {

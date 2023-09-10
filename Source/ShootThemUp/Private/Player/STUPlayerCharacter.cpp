@@ -8,10 +8,12 @@
 #include "Components/STUWeaponComponent.h"
 #include "Placement/STU_PlacementActorComponent.h"
 #include "Placement/STU_PlaceActorComponent.h"
+#include "Components/SphereComponent.h"
+#include "Components/CapsuleComponent.h"
 
 // Sets default values
 ASTUPlayerCharacter::ASTUPlayerCharacter(const FObjectInitializer& ObjInit)
-    : Super(ObjInit)
+    :Super(ObjInit)
 {
     PrimaryActorTick.bCanEverTick = true;
 
@@ -24,6 +26,11 @@ ASTUPlayerCharacter::ASTUPlayerCharacter(const FObjectInitializer& ObjInit)
        
     PlacementComponent = CreateDefaultSubobject<USTU_PlacementActorComponent>("PlacementComponent");
     PlaceActorComponent = CreateDefaultSubobject<USTU_PlaceActorComponent>("PlaceActorComponent");
+
+    CameraCollisionComponent = CreateDefaultSubobject<USphereComponent>("CameraCollisionComponent");
+    CameraCollisionComponent->SetupAttachment(CameraComponent);
+    CameraCollisionComponent->SetSphereRadius(10.0f);
+    CameraCollisionComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
 }
 
 
@@ -31,7 +38,10 @@ ASTUPlayerCharacter::ASTUPlayerCharacter(const FObjectInitializer& ObjInit)
 void ASTUPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+    check(CameraCollisionComponent);
+
+    CameraCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &ASTUPlayerCharacter::OnCameraCollisionBeginOverlap);
+    CameraCollisionComponent->OnComponentEndOverlap.AddDynamic(this, &ASTUPlayerCharacter::OnCameraCollisionEndOverlap);
 }
 
 // Called every frame
@@ -85,6 +95,33 @@ void ASTUPlayerCharacter::OnStartRunning()
 void ASTUPlayerCharacter::OnStopRunning()
 {
     WantsToRun = false;
+}
+void ASTUPlayerCharacter::OnCameraCollisionBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+    UPrimitiveComponent* OtherComp,
+    int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+    CheckKameraOverlap();
+}
+void ASTUPlayerCharacter::OnCameraCollisionEndOverlap(
+    UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+    CheckKameraOverlap();
+}
+void ASTUPlayerCharacter::CheckKameraOverlap() 
+{
+    const auto HideMesh = CameraCollisionComponent->IsOverlappingComponent(GetCapsuleComponent());
+    GetMesh()->SetOwnerNoSee(HideMesh);
+    TArray<USceneComponent*> MeshChildren;
+    GetMesh()->GetChildrenComponents(true, MeshChildren);
+
+    for (auto MeshChild : MeshChildren)
+    {
+        const auto MeshChildGeometry = Cast<UPrimitiveComponent>(MeshChild);
+        if (MeshChildGeometry)
+        {
+            MeshChildGeometry->SetOwnerNoSee(HideMesh);
+        }
+    }
 }
 bool ASTUPlayerCharacter::IsRunning() const
 {

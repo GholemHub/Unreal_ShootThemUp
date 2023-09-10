@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
+#include "Develop/STUCoreTypes.h"
 #include "STUGameHUD.generated.h"
 
 /**
@@ -22,5 +23,6 @@ protected:
 
 private:
     void DrawCrossHair();
+    void OnMatchStateChanged(ESTUMatchState State); 
 	
 };

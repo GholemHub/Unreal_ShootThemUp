@@ -10,6 +10,8 @@
  * 
  */
 
+
+
 class ASTUBaseWeapon;
 
 USTRUCT(BlueprintType)
@@ -91,3 +93,12 @@ struct FWeaponData
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     UAnimMontage* ReloadAnimMontage;
 };
+UENUM(BlueprintType)
+enum class ESTUMatchState : uint8
+{
+    WaitingToStart = 0,
+    InProgress,
+    Pause,
+    GameOver
+};
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnMatchStateChangedSignature, ESTUMatchState);

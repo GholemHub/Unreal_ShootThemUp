@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
-#include "Develop/STUCoreTypes.h"
 #include "STUPlayerController.generated.h"
 
 /**
@@ -23,9 +22,7 @@ protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
     USTURespawnComponent* RespawnComponent;
     virtual void SetupInputComponent() override;
-    virtual void BeginPlay() override;
 
 private:
     void OnPaseGame();
-    void OnMatchStateChanged(ESTUMatchState State);
 };

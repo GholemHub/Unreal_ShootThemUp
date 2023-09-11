@@ -219,18 +219,6 @@ bool ASTUGameModeBase::SetPause(APlayerController* PC, FCanUnpause CanUnpauseDel
     return PauseSet;
 }
 
-bool ASTUGameModeBase::ClearPause()
-{
-    const auto Pause = Super::ClearPause();
-
-    if (Pause)
-    {
-        SetMatchState(ESTUMatchState::InProgress);
-    }
-
-    return Pause;
-}
-
 void ASTUGameModeBase::LogPlayerInfo()
 {
     if (!GetWorld())

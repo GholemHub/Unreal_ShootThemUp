@@ -39,8 +39,6 @@ public:
     FString GetRoundData() { return FString::Printf(TEXT("%i/%i"), CurrentRound, GameData.RoundsNum); }
 
     virtual bool SetPause(APlayerController* PC, FCanUnpause CanUnpauseDelegate) override;
-    virtual bool ClearPause() override;
-
 
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Game")

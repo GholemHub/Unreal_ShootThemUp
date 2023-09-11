@@ -23,11 +23,11 @@ protected:
     TSubclassOf<UUserWidget> PauseWidgetClass;
 
     virtual void BeginPlay() override;
-   
-
-private:
     UPROPERTY()
     TMap<ESTUMatchState, UUserWidget*> GameWidgets;
+
+private:
+
     UPROPERTY()
     UUserWidget* CurrentWidget = nullptr;
 

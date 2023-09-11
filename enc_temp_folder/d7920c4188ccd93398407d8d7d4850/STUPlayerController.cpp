@@ -1,6 +1,6 @@
 #include "Player/STUPlayerController.h"
 #include "Components/STURespawnComponent.h"
-#include "STUGameModeBase.h"
+#include "GameFramework/GameModeBase.h"
 
 
 ASTUPlayerController::ASTUPlayerController() 
@@ -24,18 +24,7 @@ void ASTUPlayerController::SetupInputComponent()
     InputComponent->BindAction("PauseGame", IE_Pressed, this, &ASTUPlayerController::OnPaseGame);
 }
 
-void ASTUPlayerController::BeginPlay()
-{
-    Super::BeginPlay();
-    if (GetWorld())
-    {
-        const auto GameMode = Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode());
-        if (GameMode)
-        {
-            GameMode->OnMatchStateChanged.AddUObject(this, &ASTUPlayerController::OnMatchStateChanged);
-        }
-    }
-}
+void ASTUPlayerController::BeginPlay() {}
 
 void ASTUPlayerController::OnPaseGame() 
 {
@@ -43,22 +32,6 @@ void ASTUPlayerController::OnPaseGame()
         return;
 
     GetWorld()->GetAuthGameMode()->SetPause(this);
-}
-
-void ASTUPlayerController::OnMatchStateChanged(ESTUMatchState State) 
-{
-    if (State == ESTUMatchState::InProgress)
-    {
-        SetInputMode(FInputModeGameOnly());
-        bShowMouseCursor = false;
-
-    }
-    else
-    {
-        SetInputMode(FInputModeUIOnly());
-        bShowMouseCursor = true;
-    }
-
 }
 
 

@@ -41,15 +41,13 @@ void USTUGameOverWidget::UpdatePlayersStat()
         const auto Controller = It->Get();
         if (!Controller)
             continue;
-      
         const auto PlayerState = Cast<ASTU_PlayerState>(Controller->PlayerState);
         if (!PlayerState)
-            continue;
-       
+            return;
+
         const auto PlayerStatWidget = CreateWidget<USTUUserStatRowWidget>(GetWorld(), PlayerStatRowWidgetClass);
         if (!PlayerStatWidget)
             continue;
-
         PlayerStatWidget->SetPlayerName(FText::FromString(PlayerState->GetPlayerName()));
         PlayerStatWidget->SetKills(STUUtils::TextFromInt(PlayerState->GetKillsNum()));
         PlayerStatWidget->SetDeaths(STUUtils::TextFromInt(PlayerState->GetDeathNum()));

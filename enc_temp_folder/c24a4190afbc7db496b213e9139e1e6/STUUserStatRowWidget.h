@@ -26,15 +26,15 @@ public:
     void SetPlayerIndicatorVisibility(bool Visiable);
 
 protected:
-    UPROPERTY(meta = (BindWidget))
+    UPROPERTY()
     UTextBlock* PlayerNameTextBlock;
-    UPROPERTY(meta = (BindWidget))
+	UPROPERTY()
     UTextBlock* KillsTextBlock;
-    UPROPERTY(meta = (BindWidget))
+    UPROPERTY()
     UTextBlock* DeathsTextBlock;
-    UPROPERTY(meta = (BindWidget))
+    UPROPERTY()
     UTextBlock* TeamTextBlock;
 
-	UPROPERTY(meta = (BindWidget))
+	UPROPERTY()
     UImage* PlayerIndicatorImage;
 };

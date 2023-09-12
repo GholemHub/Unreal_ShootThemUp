@@ -20,13 +20,17 @@ public:
     virtual bool Initialize() override;
 
 protected:
-    UPROPERTY(meta = (BindWidget))
+    UPROPERTY()
     UVerticalBox* PlayerStatBox;
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
-    TSubclassOf<UUserWidget> PlayerStatRowWidgetClass;
+    TSubclassOf<USTUGameOverWidget> PlayerStatRowWidgetClass;
 
 private:
     void OnMatchStateChanged(ESTUMatchState State);
 
     void UpdatePlayersStat(); 
+
+
+    
+
 };

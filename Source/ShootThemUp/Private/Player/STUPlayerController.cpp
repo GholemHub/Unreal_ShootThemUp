@@ -51,14 +51,12 @@ void ASTUPlayerController::OnMatchStateChanged(ESTUMatchState State)
     {
         SetInputMode(FInputModeGameOnly());
         bShowMouseCursor = false;
-
     }
     else
     {
         SetInputMode(FInputModeUIOnly());
         bShowMouseCursor = true;
     }
-
 }
 
 

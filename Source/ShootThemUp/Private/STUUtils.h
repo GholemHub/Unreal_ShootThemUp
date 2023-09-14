@@ -5,7 +5,8 @@
 class STUUtils
 {
 public:
-    template <typename T> static T* GetSTUPlayerComponent(AActor* SomeActor)
+    template <typename T> 
+    static T* GetSTUPlayerComponent(AActor* SomeActor)
     {
         if (!SomeActor)
             return nullptr;

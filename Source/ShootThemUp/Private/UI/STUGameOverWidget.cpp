@@ -4,22 +4,28 @@
 #include "UI/STUGameOverWidget.h"
 #include "STUGameModeBase.h"
 #include "Components/VerticalBox.h"
+#include "Components/Button.h"
 #include "Player/STU_PlayerState.h"
 #include "STUUtils.h"
 #include "UI/STUUserStatRowWidget.h"
+#include "Kismet/GameplayStatics.h"
 
-bool USTUGameOverWidget::Initialize()
+void USTUGameOverWidget::NativeOnInitialized()
 {
-    const auto Initialize = Super::Initialize();
+    Super::NativeOnInitialized();
+
     if (GetWorld())
     {
-        const auto GameMode = Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode());
-        if (GameMode)
+        if (const auto GameMode = Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode()))
         {
             GameMode->OnMatchStateChanged.AddUObject(this, &USTUGameOverWidget::OnMatchStateChanged);
         }
     }
-    return Initialize;
+
+    if (ResetLevelButton)
+    {
+        ResetLevelButton->OnClicked.AddDynamic(this, &USTUGameOverWidget::OnResetLevel);
+    }
 }
 
 void USTUGameOverWidget::OnMatchStateChanged(ESTUMatchState State) {
@@ -58,6 +64,13 @@ void USTUGameOverWidget::UpdatePlayersStat()
 
         PlayerStatBox->AddChild(PlayerStatWidget);
     }
+}
+
+void USTUGameOverWidget::OnResetLevel() 
+{
+    UE_LOG(LogTemp, Error, TEXT("RESET LEVEl"));
+    const FString CurrentLevelName = UGameplayStatics::GetCurrentLevelName(this);
+    UGameplayStatics::OpenLevel(this, FName(CurrentLevelName));
 }
 
 

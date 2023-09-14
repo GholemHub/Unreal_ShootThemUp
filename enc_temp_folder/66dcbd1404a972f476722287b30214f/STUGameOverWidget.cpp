@@ -4,13 +4,16 @@
 #include "UI/STUGameOverWidget.h"
 #include "STUGameModeBase.h"
 #include "Components/VerticalBox.h"
+#include "Components/Button.h"
 #include "Player/STU_PlayerState.h"
 #include "STUUtils.h"
 #include "UI/STUUserStatRowWidget.h"
+#include "Kismet/GameplayStatics.h"
 
-bool USTUGameOverWidget::Initialize()
+void USTUGameOverWidget::NativeOnInitialized()
 {
-    const auto Initialize = Super::Initialize();
+    Super::NativeOnInitialized();
+    
     if (GetWorld())
     {
         const auto GameMode = Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode());
@@ -19,7 +22,11 @@ bool USTUGameOverWidget::Initialize()
             GameMode->OnMatchStateChanged.AddUObject(this, &USTUGameOverWidget::OnMatchStateChanged);
         }
     }
-    return Initialize;
+
+    if (ResetLevelButton)
+    {
+        ResetLevelButton->OnClicked.AddDynamic(this, &USTUGameOverWidget::OnResetLevel);
+    }
 }
 
 void USTUGameOverWidget::OnMatchStateChanged(ESTUMatchState State) {
@@ -41,13 +48,15 @@ void USTUGameOverWidget::UpdatePlayersStat()
         const auto Controller = It->Get();
         if (!Controller)
             continue;
+      
         const auto PlayerState = Cast<ASTU_PlayerState>(Controller->PlayerState);
         if (!PlayerState)
-            return;
-
+            continue;
+       
         const auto PlayerStatWidget = CreateWidget<USTUUserStatRowWidget>(GetWorld(), PlayerStatRowWidgetClass);
         if (!PlayerStatWidget)
             continue;
+
         PlayerStatWidget->SetPlayerName(FText::FromString(PlayerState->GetPlayerName()));
         PlayerStatWidget->SetKills(STUUtils::TextFromInt(PlayerState->GetKillsNum()));
         PlayerStatWidget->SetDeaths(STUUtils::TextFromInt(PlayerState->GetDeathNum()));
@@ -56,6 +65,12 @@ void USTUGameOverWidget::UpdatePlayersStat()
 
         PlayerStatBox->AddChild(PlayerStatWidget);
     }
+}
+
+void USTUGameOverWidget::OnResetLevel() 
+{
+    const FString CurrentLevelName = UGameplayStatics::GetCurrentLevelName(this);
+    UGameplayStatics::OpenLevel(this, FName(CurrentLevelName));
 }
 
 

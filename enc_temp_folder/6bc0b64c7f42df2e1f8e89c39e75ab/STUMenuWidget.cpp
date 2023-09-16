@@ -18,6 +18,6 @@ void USTUMenuWidget::NativeOnInitialized()
 
 void USTUMenuWidget::OnStartGame() 
 {
-    const FName StartupLevelName = "TestLevel";
+    const FName StartupLevelName = "FirstLevel";
     UGameplayStatics::OpenLevel(this, StartupLevelName);
 }

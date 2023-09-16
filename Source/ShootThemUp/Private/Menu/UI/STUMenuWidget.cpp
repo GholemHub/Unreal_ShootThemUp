@@ -4,6 +4,7 @@
 #include "Menu/UI/STUMenuWidget.h"
 #include "Components/Button.h"
 #include "Kismet/GameplayStatics.h"
+#include "STUGameInstance.h"
 
 void USTUMenuWidget::NativeOnInitialized() 
 {
@@ -18,6 +19,18 @@ void USTUMenuWidget::NativeOnInitialized()
 
 void USTUMenuWidget::OnStartGame() 
 {
-    const FName StartupLevelName = "FirstLevel";
-    UGameplayStatics::OpenLevel(this, StartupLevelName);
+    if (!GetWorld())
+        return;
+
+    const auto STUGameInstance = GetWorld()->GetGameInstance<USTUGameInstance>();
+    if (!STUGameInstance)
+        return;
+    if (STUGameInstance->GetStartupLevelName().IsNone())
+    {
+        UE_LOG(LogTemp, Error, TEXT("World name is NUN"));
+        return;
+    }
+
+    UGameplayStatics::OpenLevel(this, STUGameInstance->GetStartupLevelName());
+
 }

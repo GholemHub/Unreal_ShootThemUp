@@ -2,7 +2,6 @@
 
 
 #include "Menu/STUManuPlayerController.h"
-#include "STUGameInstance.h"
 
 void ASTUManuPlayerController::BeginPlay() 
 {

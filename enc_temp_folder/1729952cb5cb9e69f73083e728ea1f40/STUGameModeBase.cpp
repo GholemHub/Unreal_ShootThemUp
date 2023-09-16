@@ -11,7 +11,6 @@
 #include "Components/STURespawnComponent.h"
 #include "Player/STU_PlayerState.h"
 #include "EngineUtils.h"
-#include "STUGameInstance.h"
 
 constexpr static int32 MinRoundTimeForRespawn = 10;
 
@@ -26,7 +25,7 @@ ASTUGameModeBase::ASTUGameModeBase()
 void ASTUGameModeBase::StartPlay() 
 {
     Super::StartPlay();
-
+    
     SpawnBots();
     CurrentRound = 1;
 

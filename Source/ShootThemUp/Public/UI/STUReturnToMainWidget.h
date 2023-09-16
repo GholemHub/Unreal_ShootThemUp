@@ -4,8 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-
-#include "STUMenuWidget.generated.h"
+#include "STUReturnToMainWidget.generated.h"
 
 /**
  * 
@@ -13,15 +12,17 @@
 
 class UButton;
 UCLASS()
-class SHOOTTHEMUP_API USTUMenuWidget : public UUserWidget
+class SHOOTTHEMUP_API USTUReturnToMainWidget : public UUserWidget
 {
 	GENERATED_BODY()
+
+
 protected:
-    UPROPERTY(meta = (BindWidget))
-    UButton* StartGameButton;
     virtual void NativeOnInitialized() override;
 
-private:
+    UPROPERTY(meta = (BindWidget))
+    UButton* RetrunToMenu;
+public:
     UFUNCTION()
-    void OnStartGame();
+    void OnReturnToMenu();
 };

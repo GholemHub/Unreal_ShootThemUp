@@ -44,7 +44,7 @@ void ASTUAICharacter::OnHealthChanged(float Health, float HealthDelta)
     const auto HealthBarWidget = Cast<USTUHealthBarWidget>(HealthWidgetComponent->GetUserWidgetObject());
     if (!HealthBarWidget)
         return;
-    HealthBarWidget->SetHealthPercent(HealthComponent->GetHealthPercent());
+    HealthBarWidget->SetHealthPercent(HealthComponent->GetHealthPercent(), HealthComponent->IsDead());
 }
 
 void ASTUAICharacter::BeginPlay() 

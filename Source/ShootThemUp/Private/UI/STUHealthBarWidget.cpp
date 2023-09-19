@@ -4,13 +4,17 @@
 #include "UI/STUHealthBarWidget.h"
 #include "Components/ProgressBar.h"
 
-void USTUHealthBarWidget::SetHealthPercent(float Percent) 
+void USTUHealthBarWidget::SetHealthPercent(float Percent)
 {
     if (!HealthProgressBar)
         return;
-    const auto HealthBarVisibilityy =
-        (Percent > PercentVisibilityThreshold || FMath::IsNearlyZero(Percent)) ? ESlateVisibility::Hidden : ESlateVisibility::Visible;
-    HealthProgressBar->SetVisibility(HealthBarVisibilityy);
+    /*
+    *TEMPORARY SOLUTION can be hidden when actor has 0.0001 HP more than deathtrigger
+    */
+    const auto HealthBarVisibility = (Percent > PercentVisibilityThreshold || FMath::IsNearlyZero(Percent, 0.1f)) 
+                                         ? ESlateVisibility::Hidden
+                                         : ESlateVisibility::Visible;
+    HealthProgressBar->SetVisibility(HealthBarVisibility);  
 
     const auto HealthBarColor = Percent > PercentColor ? GoodColor : BadColor;
     HealthProgressBar->SetFillColorAndOpacity(HealthBarColor);

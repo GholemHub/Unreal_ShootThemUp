@@ -1,5 +1,3 @@
-// Shoot Them Up Game, All Rights Receved
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -60,7 +58,6 @@ protected:
     virtual void OnHealthChanged(float Health, float HealthDelta);
 
 public:	
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallable, Category = "Movement")
@@ -72,11 +69,8 @@ public:
 
 private:
     
-    
     void OnStartFire();
     
     UFUNCTION(BlueprintCallable)
     void OnGroundLanded(const FHitResult& Hit);
-
-
 };

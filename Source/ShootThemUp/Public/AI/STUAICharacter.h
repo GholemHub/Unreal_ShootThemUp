@@ -26,6 +26,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
     UBehaviorTree* BehaviorTreeAsset;
 
+    virtual void Tick(float DeltaTime) override;
+
 	
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Components")
@@ -34,7 +36,13 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
     USTUHealthComponent* HealthComponent;
 
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+    float HealthVisibilityDistance = 1000;
+
     virtual void OnDeath() override;
     virtual void OnHealthChanged(float Health, float HealthDelta) override;
     virtual void BeginPlay() override;
+
+private:
+    void UpdateHealthWdgetVisibility();
 };

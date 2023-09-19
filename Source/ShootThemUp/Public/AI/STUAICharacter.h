@@ -4,9 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "Player/STUBaseCharacter.h"
+#include "UI/STUHealthBarWidget.h"
 #include "STUAICharacter.generated.h"
 
 class UBehaviorTree;
+class UWidgetComponent;
+class USTUHealthComponent;
+
+
 /**
  * 
  */
@@ -21,7 +26,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
     UBehaviorTree* BehaviorTreeAsset;
 
+	
 protected:
-    virtual void OnDeath() override;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Components")
+    UWidgetComponent* HealthWidgetComponent;
 
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+    USTUHealthComponent* HealthComponent;
+
+    virtual void OnDeath() override;
+    virtual void OnHealthChanged(float Health, float HealthDelta) override;
+    virtual void BeginPlay() override;
 };

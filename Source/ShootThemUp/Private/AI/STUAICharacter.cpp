@@ -3,6 +3,9 @@
 
 #include "AI/STUAICharacter.h"
 #include "AI/STUAIController.h"
+#include "Components/WidgetComponent.h"
+#include "UI/STUHealthBarWidget.h"
+#include "Components/STUHealthComponent.h"
 #include "BrainComponent.h"
 
 ASTUAICharacter::ASTUAICharacter(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
@@ -11,6 +14,13 @@ ASTUAICharacter::ASTUAICharacter(const FObjectInitializer& ObjectInitializer) : 
     AIControllerClass = ASTUAIController::StaticClass();
 
     bUseControllerRotationYaw = false;
+
+    // Create and initialize the HealthComponent
+    HealthComponent = CreateDefaultSubobject<USTUHealthComponent>("HealthComponent");
+
+    HealthWidgetComponent = CreateDefaultSubobject<UWidgetComponent>("HealthWidgetComponent");
+    HealthWidgetComponent->SetupAttachment(GetRootComponent());
+    HealthWidgetComponent->SetWidgetSpace(EWidgetSpace::Screen);
 }
 
 void ASTUAICharacter::OnDeath() 
@@ -23,4 +33,20 @@ void ASTUAICharacter::OnDeath()
     {
         STUController->BrainComponent->Cleanup();
     }
+}
+
+void ASTUAICharacter::OnHealthChanged(float Health, float HealthDelta)
+{
+    Super::OnHealthChanged(Health, HealthDelta);
+
+    const auto HealthBarWidget = Cast<USTUHealthBarWidget>(HealthWidgetComponent->GetUserWidgetObject());
+    if (!HealthBarWidget)
+        return;
+    HealthBarWidget->SetHealthPercent(HealthComponent->GetHealthPercent());
+}
+
+void ASTUAICharacter::BeginPlay() 
+{
+    Super::BeginPlay();
+    check(HealthWidgetComponent);
 }

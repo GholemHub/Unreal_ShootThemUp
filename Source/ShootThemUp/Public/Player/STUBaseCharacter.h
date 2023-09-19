@@ -57,7 +57,7 @@ protected:
     FName MaterialColorName = "Paint Color";
 
     virtual void OnDeath();
-  
+    virtual void OnHealthChanged(float Health, float HealthDelta);
 
 public:	
 	// Called every frame
@@ -72,7 +72,7 @@ public:
 
 private:
     
-    void OnHealthChanged(float Health, float HealthDelta);
+    
     void OnStartFire();
     
     UFUNCTION(BlueprintCallable)

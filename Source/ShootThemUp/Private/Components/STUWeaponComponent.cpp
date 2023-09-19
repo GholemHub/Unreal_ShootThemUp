@@ -78,6 +78,7 @@ void USTUWeaponComponent::EquipWeapon(int32 WeaponIndex)
         UE_LOG(LogWeaponComponent, Error, TEXT("Invalid weapon index"));
         return;
     }
+    //UE_LOG(LogWeaponComponent, Error, TEXT("Invalid weapon index %i"), WeaponIndex);
 
     ACharacter* Character = Cast<ACharacter>(GetOwner());
     if (!Character)

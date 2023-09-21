@@ -46,4 +46,10 @@ private:
     FLevelsData LevelData;
     UFUNCTION()
     void OnLevelItemClicked();
+
+    UFUNCTION()
+    void OnLevelItemHovered();
+
+    UFUNCTION()
+    void OnLevelItemUnHovered();
 };

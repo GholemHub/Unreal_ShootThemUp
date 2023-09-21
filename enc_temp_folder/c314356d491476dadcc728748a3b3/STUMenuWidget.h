@@ -3,9 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UI/STUBaseWidget.h"
+#include "Blueprint/UserWidget.h"
 #include "Develop/STUCoreTypes.h"
-
 #include "STUMenuWidget.generated.h"
 
 /**
@@ -18,7 +17,7 @@ class USTUGameInstance;
 class USTULevelItemWidget;
 
 UCLASS()
-class SHOOTTHEMUP_API USTUMenuWidget : public USTUBaseWidget
+class SHOOTTHEMUP_API USTUMenuWidget : public UUserWidget
 {
 	GENERATED_BODY()
 protected:

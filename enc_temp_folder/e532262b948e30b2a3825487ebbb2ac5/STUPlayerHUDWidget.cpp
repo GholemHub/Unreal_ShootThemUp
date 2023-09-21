@@ -118,20 +118,20 @@ void USTUPlayerHUDWidget::NativeOnInitialized()
    
 }
 
-FString USTUPlayerHUDWidget::FormatBulets(int BulletsNum) const
-{
-    const int32 MaxLen = 3;
-    const TCHAR PrefixSymbol = '0';
-
-    auto BulletStr = FString::FromInt(BulletsNum);
-    const auto SymbolsNumToAdd = MaxLen - BulletStr.Len();
-
-    if (SymbolsNumToAdd > 0)
-    {
-        BulletStr = FString::ChrN(SymbolsNumToAdd, PrefixSymbol).Append(BulletStr);
-    }
-    return BulletStr;
-}
+//FString USTUPlayerHUDWidget::FormatBulets(int32 BulletsNum) const
+//{
+//    const int32 MaxLen = 3;
+//    const TCHAR PrefixSymbol = '0';
+//
+//    auto BulletStr = FString::FromInt(BulletsNum);
+//    const auto SymbolsNumToAdd = MaxLen - BulletStr.Len();
+//
+//    if (SymbolsNumToAdd > 0)
+//    {
+//        BulletStr = FString::ChrN(SymbolsNumToAdd, PrefixSymbol).Append(BulletStr);
+//    }
+//    return BulletStr;
+//}
 
 USTUHealthComponent* USTUPlayerHUDWidget::GetHealthComponent() const
 {
@@ -150,11 +150,6 @@ void USTUPlayerHUDWidget::OnHealthCanged(float Health, float HealthDelta)
     if (HealthDelta < 0.0f)
     {
         OnTakeDamage();
-
-        if (!IsAnimationPlaying(DamageAnimation))
-        {
-            PlayAnimation(DamageAnimation);
-        }
     }
     UpdateHealthBar();
 }

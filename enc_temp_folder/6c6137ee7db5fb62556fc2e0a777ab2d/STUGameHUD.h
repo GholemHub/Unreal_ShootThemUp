@@ -10,8 +10,6 @@
 /**
  * 
  */
-class USTUBaseWidget;
-
 UCLASS()
 class SHOOTTHEMUP_API ASTUGameHUD : public AHUD
 {
@@ -32,9 +30,9 @@ protected:
 
 private:
     UPROPERTY()
-    TMap<ESTUMatchState, USTUBaseWidget*> GameWidgets;
+    TMap<ESTUMatchState, UUserWidget*> GameWidgets;
     UPROPERTY()
-    USTUBaseWidget* CurrentWidget = nullptr;
+    UUserWidget* CurrentWidget = nullptr;
 
 
     void DrawCrossHair();

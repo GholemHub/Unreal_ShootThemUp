@@ -24,10 +24,8 @@ void USTUMenuWidget::NativeOnInitialized()
     InitLevelItems();
 }
 
-void USTUMenuWidget::OnAnimationFinished_Implementation(const UWidgetAnimation* Animation) 
+void USTUMenuWidget::OnStartGame() 
 {
-    if (Animation != HideAnimation)
-        return;
     if (!GetWorld())
         return;
 
@@ -36,11 +34,6 @@ void USTUMenuWidget::OnAnimationFinished_Implementation(const UWidgetAnimation* 
         return;
 
     UGameplayStatics::OpenLevel(this, STUGameInstance->GetStartupLevel().LevelName);
-}
-
-void USTUMenuWidget::OnStartGame() 
-{
-    PlayAnimation(HideAnimation);
 
 }
 

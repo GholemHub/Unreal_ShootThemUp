@@ -62,10 +62,12 @@ void ASTUAICharacter::Tick(float DeltaTime)
 
 void ASTUAICharacter::UpdateHealthWdgetVisibility() 
 {
-    if (!GetWorld() || !GetWorld()->GetFirstPlayerController() || !GetWorld()->GetFirstPlayerController()->GetPawn())
+    if (!GetWorld() || 
+        !GetWorld()->GetFirstPlayerController() || 
+        !GetWorld()->GetFirstPlayerController()->GetPawnOrSpectator())
         return;
 
-    const auto PlayerLocation = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation();
+    const auto PlayerLocation = GetWorld()->GetFirstPlayerController()->GetPawnOrSpectator()->GetActorLocation();
     const auto Distance = FVector::Distance(PlayerLocation, GetActorLocation());
 
     HealthWidgetComponent->SetVisibility(Distance < HealthVisibilityDistance, true);

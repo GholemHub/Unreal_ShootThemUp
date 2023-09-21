@@ -54,7 +54,7 @@ public:
     UProgressBar* HealthProgressBar;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
-    float PercentColorThreshold = 0.3f;
+    float PercentVisibilityThreshold = 0.8;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
     FLinearColor GoodColor = FLinearColor::White;

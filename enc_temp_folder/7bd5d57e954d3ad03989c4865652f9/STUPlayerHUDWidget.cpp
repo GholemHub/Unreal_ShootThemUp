@@ -58,10 +58,9 @@ int32 USTUPlayerHUDWidget::GetKillsUIAmmoData() const
    const auto PlayerController = Player->GetController();
     if (!PlayerController)
         return 0;
-   /*const auto PlayerState = Cast<ASTU_PlayerState>(PlayerController->PlayerState);
+   const auto PlayerState = Cast<ASTU_PlayerState>(PlayerController->PlayerState);
   
-   return PlayerState->GetKillsNum();*/
-    return 0;
+   return PlayerState->GetKillsNum();
 }
 
 int32 USTUPlayerHUDWidget::GetKillsNum() const
@@ -71,7 +70,7 @@ int32 USTUPlayerHUDWidget::GetKillsNum() const
         return 0;
 
    const auto PlayerState = Cast<ASTU_PlayerState>(Controller->GetPlayerState());
-   return PlayerState ? PlayerState->GetKillsNum()/2 : 0;
+   return PlayerState ? PlayerState->GetKillsNum() : 0;
 }
 
 FString USTUPlayerHUDWidget::GetRoundUIData() const
@@ -153,6 +152,6 @@ void USTUPlayerHUDWidget::UpdateHealthBar()
 {
     if (HealthProgressBar)
     {
-        HealthProgressBar->SetFillColorAndOpacity(GetHealthPervent() > PercentColorThreshold ? GoodColor : BadColor);
+        HealthProgressBar->SetFillColorAndOpacity(GetHealthPervent() > PercentVisibilityThreshold ? GoodColor : BadColor);
     }
 }

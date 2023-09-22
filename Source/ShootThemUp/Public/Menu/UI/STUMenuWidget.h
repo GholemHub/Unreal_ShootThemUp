@@ -37,7 +37,6 @@ protected:
     UWidgetAnimation* HideAnimation;
 
 
-
     virtual void NativeOnInitialized() override;
     virtual void OnAnimationFinished_Implementation(const UWidgetAnimation* Animation) override;
 

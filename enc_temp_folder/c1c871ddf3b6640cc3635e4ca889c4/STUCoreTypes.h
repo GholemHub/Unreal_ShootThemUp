@@ -29,7 +29,6 @@ struct FWeaponUIData
 //VFX
 
 class UNiagaraSystem;
-class USoundCue;
 
 USTRUCT(BlueprintType)
 struct FDicalData
@@ -57,9 +56,6 @@ struct FImpactData
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
     FDicalData DecalData;
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
-    USoundCue* ImpactSound;
 };
 
 USTRUCT(BlueprintType)

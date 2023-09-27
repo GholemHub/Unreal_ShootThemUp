@@ -8,6 +8,8 @@
 #include "Components/MeshComponent.h"
 #include "Player/STUBaseCharacter.h"
 #include "AI/STUAICharacter.h"
+#include "Sound/SoundCue.h"
+#include "Kismet/GameplayStatics.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogBaseWeapon, All, All);
 

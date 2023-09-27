@@ -5,6 +5,8 @@
 #include "Components/STUWeaponComponent.h"
 #include "Components/STUHealthComponent.h"
 #include "STUUtils.h"
+#include "Sound/SoundCue.h"
+#include "Kismet/GameplayStatics.h"
 
 
 bool ASTUAmmoPickup::GivePickupTo(APawn* PlayerPawn)
@@ -17,6 +19,10 @@ bool ASTUAmmoPickup::GivePickupTo(APawn* PlayerPawn)
     const auto WeaponComponent = STUUtils::GetSTUPlayerComponent<USTUWeaponComponent>(PlayerPawn);
     if (!WeaponComponent)
         return false;
-
-    return WeaponComponent->TryToAddAmmo(WeaponType, ClipsAmount);
+    auto Added = WeaponComponent->TryToAddAmmo(WeaponType, ClipsAmount);
+    if (Added)
+    {
+        UGameplayStatics::PlaySoundAtLocation(GetWorld(), PickupSound, GetActorLocation());
+    }
+    return Added;
 }

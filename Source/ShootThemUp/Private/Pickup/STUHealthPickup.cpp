@@ -4,6 +4,8 @@
 #include "Pickup/STUHealthPickup.h"
 #include "Components/STUHealthComponent.h"
 #include "STUUtils.h"
+#include "Sound/SoundCue.h"
+#include "Kismet/GameplayStatics.h"
 
 bool ASTUHealthPickup::GivePickupTo(APawn* PlayerPawn)
 {
@@ -11,5 +13,10 @@ bool ASTUHealthPickup::GivePickupTo(APawn* PlayerPawn)
     if (!HealthComponent || HealthComponent->IsDead() || HealthComponent->GetHealthPercent() == 100.0)
         return false;
 
-    return HealthComponent->TryToHeal(HealthPoints);
+    auto Hilled = HealthComponent->TryToHeal(HealthPoints);
+    if (Hilled)
+    {
+        UGameplayStatics::PlaySoundAtLocation(GetWorld(), PickupSound, GetActorLocation()); 
+    }
+    return Hilled;
 }

@@ -13,6 +13,7 @@ class USTUHealthComponent;
 class USTUWeaponComponent;
 class USTU_PlacementActorComponent;
 class USTU_PlaceActorComponent;
+class USoundCue;
 
 UCLASS()
 class SHOOTTHEMUP_API ASTUBaseCharacter : public ACharacter
@@ -30,8 +31,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
         USTUHealthComponent* STUHealth;
-
-	
+	 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
+        USoundCue* DeathSound;
 
     UPROPERTY(EditDefaultsOnly, Category = "Animation")
     UAnimMontage* DeathAnimMintage;

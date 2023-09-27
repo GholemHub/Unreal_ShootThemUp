@@ -4,10 +4,8 @@
 #include "Components/STUWeaponFXComponent.h"
 #include "NiagaraFunctionLibrary.h"
 #include "Kismet/GameplayStatics.h"
-#include "Sound/SoundCue.h"
 #include "Components/DecalComponent.h"
 #include "PhysicalMaterials/PhysicalMaterial.h"
-
 
 
 // Sets default values for this component's properties
@@ -44,8 +42,4 @@ void USTUWeaponFXComponent::PlayImpactFX(const FHitResult& Hit)
 	{
         DecalComponent->SetFadeOut(ImpactData.DecalData.LifeTime, ImpactData.DecalData.FadeOutTime);
 	}
-
-	//sound 
-	UGameplayStatics::PlaySoundAtLocation(GetWorld(), ImpactData.ImpactSound, Hit.ImpactPoint);
-
 }

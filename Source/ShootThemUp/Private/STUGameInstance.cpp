@@ -6,5 +6,5 @@
 
 void USTUGameInstance::ToggleVolume() 
 {
-    USTUSoundFunLib::ToggleSoundClassVolume(MasterSoundClass);
+    USTUSoundFunLib::ToggleSoundClassVolume(MasterSoundClass); 
 }

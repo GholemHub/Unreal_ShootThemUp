@@ -7,12 +7,7 @@
 #include "Develop/STUCoreTypes.h"
 #include "STUGameInstance.generated.h"
 
-/**
- * 
- */
-
 class USoundClass;
-
 
 UCLASS()
 class SHOOTTHEMUP_API USTUGameInstance : public UGameInstance

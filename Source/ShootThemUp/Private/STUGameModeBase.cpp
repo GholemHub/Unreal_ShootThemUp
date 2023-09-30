@@ -108,7 +108,6 @@ void ASTUGameModeBase::ResetOnePlayer(AController* Controller)
 
 void ASTUGameModeBase::StartRespawn(AController* Controller) 
 {
-
     const auto RespawnAviable = RoundCountDown > MinRoundTimeForRespawn + GameData.RespawnTime;
     if (!RespawnAviable)
         return;
@@ -152,7 +151,6 @@ void ASTUGameModeBase::CreateTeamsInfo()
         PlayerState->SetTeamID(TeamID);
         PlayerState->SetTeamColor(DetermineColorByTeamID(TeamID));
         PlayerState->SetPlayerName(Controller->IsPlayerController() ? "Player" : "Bot");
-        //PlayerState->SetPlayerName(Controller->IsPlayerController() ? "Player" : "Bot");
         SetPlayerColor(Controller);
 
         TeamID = TeamID == 1 ? 2 : 1;

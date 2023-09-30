@@ -86,6 +86,7 @@ void USTUWeaponComponent::EquipWeapon(int32 WeaponIndex)
 
     if (CurrentWeapon)
     {
+        CurrentWeapon->Zoom(false);
         CurrentWeapon->StopFire();
         AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponArmorySocketName);
     }
@@ -127,6 +128,14 @@ void USTUWeaponComponent::NextWeapon()
         return;
     CurrentWeaponIndex = (CurrentWeaponIndex + 1) % Weapons.Num();
     EquipWeapon(CurrentWeaponIndex);
+}
+
+void USTUWeaponComponent::Zoom(bool Enabled) 
+{
+    if (CurrentWeapon)
+    {
+        CurrentWeapon->Zoom(Enabled);
+    }
 }
 
 

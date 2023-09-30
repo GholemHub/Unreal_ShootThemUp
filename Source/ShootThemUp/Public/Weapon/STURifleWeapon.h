@@ -22,6 +22,7 @@ class SHOOTTHEMUP_API ASTURifleWeapon : public ASTUBaseWeapon
 public:
 	virtual void StartFire() override;
     virtual void StopFire() override;
+    virtual void Zoom(bool Enabled) override;
 
 protected:
     virtual void MakeShot() override;
@@ -44,7 +45,8 @@ protected:
     UNiagaraSystem* TraceFX;
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Trace")
     FString TraceTargetName = "TraceTarget";
-   
+    UPROPERTY(EditDefaultsOnly, Category = "Zoom")
+    float FOVZoomAngle = 50.0f;
 
 private:
     UPROPERTY()
@@ -58,5 +60,6 @@ private:
     UPROPERTY()
     UAudioComponent* FireAudioComponent;
 
+    float DefaultCameraFOV = 90.0f;
     void SpawnTraceFX(const FVector& TraceStart, const FVector& TraceEnd);
 };

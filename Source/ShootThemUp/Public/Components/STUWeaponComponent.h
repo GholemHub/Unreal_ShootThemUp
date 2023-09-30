@@ -22,6 +22,7 @@ public:
     void StopFire();
     bool IsFiring() const;
     virtual void NextWeapon();
+    void Zoom(bool Enabled);
     void Reload();
 
     bool GetWeaponUIData(FWeaponUIData& UIData) const;
@@ -41,6 +42,7 @@ protected:
     FName WeaponArmorySocketName = "ArmorySocket";
     UPROPERTY(EditDefaultsOnly, Category = "Animation")
     UAnimMontage* EquipAnimMontage;
+    
 
     bool CanFire() const;
     bool CanEquip() const;
@@ -77,6 +79,7 @@ private:
 
     void OnEmptyClip(ASTUBaseWeapon* AmmoEmptyWeapon);
     void ChangeClip();
+
 
     template<typename T> 
     T* FindNotifyByClass(UAnimSequenceBase* Animation) 

@@ -7,9 +7,6 @@
 #include "Develop/STUCoreTypes.h"
 #include "STUWeaponFXComponent.generated.h"
 
-
-
-
 class UNiagaraSystem;
 class UPhysicalMaterial;
 

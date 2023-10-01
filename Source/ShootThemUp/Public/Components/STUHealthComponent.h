@@ -8,6 +8,7 @@ DECLARE_MULTICAST_DELEGATE(FOnDeath)
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnHealthChanged, float, float)
 
     class UCameraShakeBase;
+    class UPsysicalMaterial;
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class SHOOTTHEMUP_API USTUHealthComponent : public UActorComponent
@@ -24,6 +25,15 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Health")
     float GetHealthPercent() const {return Health / MaxHealth; }
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Health")
+    TMap<UPhysicalMaterial*, float> DamageModifiers;
+
+    UFUNCTION()
+    void OnTakePointDamage(AActor* DamagedActor, float Damage, class AController* InstigatedBy, FVector HitLocation, class UPrimitiveComponent*
+        FHitComponent, FName BoneName, FVector ShotFromDirection, const class UDamageType* DamageType, AActor* DamageCauser);
+    UFUNCTION()
+    void OnTakeRadialDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType, FVector Origin, const FHitResult&
+        HitInfo, class AController* InstigatedBy, AActor* DamageCauser);
     FOnDeath OnDeath;
     FOnHealthChanged OnHealthChanged;
 
@@ -66,5 +76,8 @@ private:
     void DamageOutline(AActor* DamagedActor);
 
     void Killed(AController* KillerController);
+    void ApplyDamage(float Damage, AController* InstigatedBy);
+
+    float GetPointDamageModifier(AActor* DamagedActor, const FName& BoneName);
 
 };

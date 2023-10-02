@@ -16,7 +16,7 @@ ASTUAICharacter::ASTUAICharacter(const FObjectInitializer& ObjectInitializer) : 
     bUseControllerRotationYaw = false;
 
     // Create and initialize the HealthComponent
-    HealthComponent = CreateDefaultSubobject<USTUHealthComponent>("HealthComponent");
+    //HealthComponent = CreateDefaultSubobject<USTUHealthComponent>("HealthComponent");
 
     HealthWidgetComponent = CreateDefaultSubobject<UWidgetComponent>("HealthWidgetComponent");
     HealthWidgetComponent->SetupAttachment(GetRootComponent());
@@ -44,7 +44,7 @@ void ASTUAICharacter::OnHealthChanged(float Health, float HealthDelta)
     const auto HealthBarWidget = Cast<USTUHealthBarWidget>(HealthWidgetComponent->GetUserWidgetObject());
     if (!HealthBarWidget)
         return;
-    HealthBarWidget->SetHealthPercent(HealthComponent->GetHealthPercent());
+    HealthBarWidget->SetHealthPercent(STUHealth->GetHealthPercent());
 }
 
 void ASTUAICharacter::BeginPlay() 

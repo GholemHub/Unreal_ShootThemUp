@@ -9,7 +9,7 @@
 
 class UBehaviorTree;
 class UWidgetComponent;
-class USTUHealthComponent;
+//class USTUHealthComponent;
 
 
 /**
@@ -33,8 +33,8 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Components")
     UWidgetComponent* HealthWidgetComponent;
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-    USTUHealthComponent* HealthComponent;
+   /* UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+    USTUHealthComponent* HealthComponent;*/
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
     float HealthVisibilityDistance = 1000;

@@ -8,44 +8,41 @@
 #include "Components/DecalComponent.h"
 #include "PhysicalMaterials/PhysicalMaterial.h"
 
-
-
-// Sets default values for this component's properties
 USTUWeaponFXComponent::USTUWeaponFXComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
-
-	
+    PrimaryComponentTick.bCanEverTick = false;
 }
 
-void USTUWeaponFXComponent::PlayImpactFX(const FHitResult& Hit) 
+void USTUWeaponFXComponent::PlayImpactFX(const FHitResult& Hit)
 {
     auto ImpactData = DefaultImpactData;
 
-	if (Hit.PhysMaterial.IsValid())
-	{
+    if (Hit.PhysMaterial.IsValid())
+    {
         const auto PhysMat = Hit.PhysMaterial.Get();
-		if (ImpactDataMap.Contains(PhysMat))
-		{
+        if (ImpactDataMap.Contains(PhysMat))
+        {
             ImpactData = ImpactDataMap[PhysMat];
-		}
-	}
+        }
+    }
 
+    // niagara
+    UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), //
+        ImpactData.NiagaraEffect,                              //
+        Hit.ImpactPoint,                                       //
+        Hit.ImpactNormal.Rotation());
 
-	//Niagara
-    UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), ImpactData.NiagaraEffect, Hit.ImpactPoint, Hit.ImpactNormal.Rotation());
-	//Decal
+    // decal
     auto DecalComponent = UGameplayStatics::SpawnDecalAtLocation(GetWorld(), //
-        ImpactData.DecalData.Material, ImpactData.DecalData.Size, Hit.ImpactPoint, (Hit.ImpactNormal * -1.0f).Rotation());
-
-	if (DecalComponent)
-	{
+        ImpactData.DecalData.Material,                                       //
+        ImpactData.DecalData.Size,                                           //
+        Hit.ImpactPoint,                                                     //
+        Hit.ImpactNormal.Rotation());
+    if (DecalComponent)
+    {
         DecalComponent->SetFadeOut(ImpactData.DecalData.LifeTime, ImpactData.DecalData.FadeOutTime);
-	}
+    }
 
-	//sound 
-	UGameplayStatics::PlaySoundAtLocation(GetWorld(), ImpactData.ImpactSound, Hit.ImpactPoint);
-
+    // sound
+    UGameplayStatics::PlaySoundAtLocation(GetWorld(), ImpactData.ImpactSound, Hit.ImpactPoint);
 }

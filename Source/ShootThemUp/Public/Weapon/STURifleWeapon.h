@@ -18,48 +18,55 @@ class UAudioComponent;
 UCLASS()
 class SHOOTTHEMUP_API ASTURifleWeapon : public ASTUBaseWeapon
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 public:
-	virtual void StartFire() override;
+    ASTURifleWeapon();
+
+    virtual void StartFire() override;
     virtual void StopFire() override;
     virtual void Zoom(bool Enabled) override;
 
 protected:
-    virtual void MakeShot() override;
-    ASTURifleWeapon();
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
-    float DamageAmount = 10.0f;
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fire")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     float TimeBetweenShots = 0.1f;
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fire")
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     float BulletSpread = 1.5f;
-    virtual bool GetTraceData(FVector&, FVector&) const override;
 
-    virtual void BeginPlay() override;
-    virtual void Tick(float DeltaSeconds) override;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+    float DamageAmount = 10.0f;
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "VFX")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
+    UNiagaraSystem* TraceFX;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
+    FString TraceTargetName = "TraceTarget";
+
+    UPROPERTY(VisibleAnywhere, Category = "VFX")
     USTUWeaponFXComponent* WeaponFXComponent;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Trace")
-    UNiagaraSystem* TraceFX;
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Trace")
-    FString TraceTargetName = "TraceTarget";
-    UPROPERTY(EditDefaultsOnly, Category = "Zoom")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     float FOVZoomAngle = 50.0f;
 
+    virtual void BeginPlay() override;
+    virtual void MakeShot() override;
+    virtual bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const override;
+
 private:
+    FTimerHandle ShotTimerHandle;
+
     UPROPERTY()
     UNiagaraComponent* MuzzleFXComponent;
-    AController* GetController() const;
 
-    FTimerHandle ShotTimerHandle;
-    void MakeDamage(const FHitResult& HitResult);
-    void InitFX();
-    void SetFXActive(bool Visable);
     UPROPERTY()
     UAudioComponent* FireAudioComponent;
 
-    float DefaultCameraFOV = 90.0f;
+    void MakeDamage(const FHitResult& HitResult);
+    void InitFX();
+    void SetFXActive(bool IsActive);
     void SpawnTraceFX(const FVector& TraceStart, const FVector& TraceEnd);
+
+    AController* GetController() const;
+
+    float DefaultCameraFOV = 90.0f;
 };
